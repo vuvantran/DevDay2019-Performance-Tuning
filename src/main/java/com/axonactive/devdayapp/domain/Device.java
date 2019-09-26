@@ -4,12 +4,14 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@Table(name="devices")
 public class Device implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private User user;
 
     @Column

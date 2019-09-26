@@ -4,12 +4,14 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@Table(name="book_tags")
 public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="book_detail_id", nullable=false)
     private BookDetail bookDetail;
 
     @Column

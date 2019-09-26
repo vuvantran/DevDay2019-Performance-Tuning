@@ -4,15 +4,18 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
+@Table(name="book_comments")
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="book_detail_id", nullable=false)
     private BookDetail bookDetail;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
     private User user;
 
     @Column
@@ -34,7 +37,7 @@ public class Comment implements Serializable {
     }
 
     public void setBookDetail(BookDetail bookDetail) {
-        this.bookDetail = bookDetail
+        this.bookDetail = bookDetail;
     }
 
     public User getUser() {
