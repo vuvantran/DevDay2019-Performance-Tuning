@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_DIR">
+            logs
+        </Property>
+        <Property name="LOG_FILENAME">
+            devday2019app
+        </Property>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd} - %d{HH:mm:ss.SSS} - %level{length=1} - %60class | %msg%n
+        </Property>
+    </Properties>
+ 
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+         
+        <RollingFile name="errorLog" fileName="${LOG_DIR}/${LOG_FILENAME}-errors.log"
+            filePattern="${LOG_DIR}/${LOG_FILENAME}-errors-%d{yyyy-MM-dd}.log">
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>W
+        </RollingFile>
+         
+        <RollingFile name="exceptDebugLog" fileName="${LOG_DIR}/${LOG_FILENAME}.log"
+            filePattern="${LOG_DIR}/${LOG_FILENAME}-%d{yyyy-MM-dd}.log" >
+            <ThresholdFilter level="INFO"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+ 
+    <Loggers>
+        <Logger name="com.axonactive.devdayapp" additivity="false">
+            <AppenderRef ref="errorLog" />
+            <AppenderRef ref="exceptDebugLog"  />
+            <AppenderRef ref="Console"  />
+        </Logger>
+        
+        <Root level="all">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
