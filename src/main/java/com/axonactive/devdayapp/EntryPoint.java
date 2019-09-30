@@ -1,5 +1,9 @@
 package com.axonactive.devdayapp;
 
+import com.axonactive.devdayapp.domain.Book;
+import com.axonactive.devdayapp.domain.Comment;
+import java.util.List;
+import java.util.ArrayList;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -18,22 +22,52 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "com.axonactive.devdayapp.domain" )
 public class EntryPoint {
 
-	@RequestMapping("/")
-	String home() {
-		return "Hello World!";
+    private static final String API_ROOT = "/library-core/api/books";
+
+	@RequestMapping(path = API_ROOT, method = RequestMethod.GET)
+	public List<Book> getBooks() {
+        Book book = new Book();
+        book.setId(123l);
+        book.setName("Used to be king");
+        book.setAuthor("Thomas Hamstor");
+        List<Book> books = new ArrayList<>();
+        books.add(book);
+		return books;
+	}
+
+	@RequestMapping(path = API_ROOT + "/{bookId}", method = RequestMethod.GET)
+	public Book getBookById(@PathVariable("bookId") Long bookId) {
+        Book book = new Book();
+        book.setId(bookId);
+        book.setName("Used to be king");
+        book.setAuthor("Thomas Hamstor");
+		return book;
+	}
+
+	@RequestMapping(path = API_ROOT + "/{bookId}/comments", method = RequestMethod.GET)
+	public List<Comment> getCommentByBookId(@PathVariable("bookId") Long bookId) {
+        Comment comment = new Comment();
+        comment.setId(195l);
+        comment.setContent("Good book!");
+        List<Comment> comments = new ArrayList<>(0);
+        comments.add(comment);
+        return comments;
+	}
+
+	@RequestMapping(path = API_ROOT + "/search", method = RequestMethod.POST)
+	public List<Book> searchBook() {
+        Book book = new Book();
+        book.setId(123l);
+        book.setName("Used to be king");
+        book.setAuthor("Thomas Hamstor");
+        List<Book> books = new ArrayList<>();
+        books.add(book);
+		return books;
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(EntryPoint.class, args);
 	}
-	@RequestMapping("/api/books/{id}")
-	Book getSingleBook(@PathVariable final  long id) {
-		Book b = new Book();
-		b.setAuthor("Ian");
-		b.setId(id);
-		b.setName("Rusian in summer");
-		b.setSerialNumber("1247465094357-85");
-		return b;
-	}
+
 }
 
