@@ -17,7 +17,7 @@ public class Book implements Serializable {
     @Column
     private String author;
 
-    @Column
+    @Column (name = "serial_number")
     private String serialNumber;
 
     @OneToMany(mappedBy="book")
@@ -73,6 +73,7 @@ public class Book implements Serializable {
     public void setSubscribers(List<User> subscribers) {
         this.subscribers = subscribers;
     }
+
 
 }
 
