@@ -1,29 +1,28 @@
 package com.axonactive.devdayapp;
 
-import com.axonactive.devdayapp.domain.Book;
-import com.axonactive.devdayapp.domain.Comment;
-import com.axonactive.devdayapp.domain.SimpleBook;
-import com.axonactive.devdayapp.service.BookService;
-import com.axonactive.devdayapp.service.DefaultBookService;
 
-import java.util.List;
 import java.util.ArrayList;
-import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.web.bind.annotation.*;
-
-import com.axonactive.devdayapp.domain.Book;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axonactive.devdayapp.domain.Book;
+import com.axonactive.devdayapp.domain.Comment;
+import com.axonactive.devdayapp.service.BookService;
 
 @RestController
 @EnableAutoConfiguration
-@ComponentScan (basePackages = "com.axonactive.devdayapp")
-@EnableJpaRepositories(basePackages ="com.axonactive.devdayapp.repo")
-@EntityScan(basePackages = "com.axonactive.devdayapp.domain" )
+@ComponentScan
+//@ComponentScan (basePackages = "com.axonactive.devdayapp")
+//@EnableJpaRepositories(basePackages ="com.axonactive.devdayapp.repo")
+//@EntityScan(basePackages = "com.axonactive.devdayapp.domain" )
 public class EntryPoint {
 
     private static final String API_ROOT = "/library-core/api/books";
@@ -31,18 +30,13 @@ public class EntryPoint {
     private BookService bookService;
 
 	@RequestMapping(path = API_ROOT, method = RequestMethod.GET)
-	public List<SimpleBook> getBooks() {
-        
+	public List<Book> getBooks() {
 		return bookService.getAll();
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}", method = RequestMethod.GET)
 	public Book getBookById(@PathVariable("bookId") Long bookId) {
-        Book book = new Book();
-        book.setId(bookId);
-        book.setName("Used to be king");
-        book.setAuthor("Thomas Hamstor");
-		return book;
+        return bookService.findById(bookId);
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}/comments", method = RequestMethod.GET)

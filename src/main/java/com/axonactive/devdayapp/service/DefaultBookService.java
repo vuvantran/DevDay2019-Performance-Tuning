@@ -6,18 +6,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.axonactive.devdayapp.domain.SimpleBook;
-import com.axonactive.devdayapp.repo.SimpleBookRepository;
+import com.axonactive.devdayapp.domain.Book;
+import com.axonactive.devdayapp.repo.BookRepository;
+
 
 @Service
 public class DefaultBookService implements BookService {
 
     @Autowired
-    private SimpleBookRepository bookRepo;
+    private BookRepository bookRepo;
     @Override
-	public SimpleBook findById(long bookId) {
+	public Book findById(long bookId) {
 		// TODO Auto-generated method stub
-		Optional<SimpleBook> result = bookRepo.findById(bookId);
+		Optional<Book> result = bookRepo.findById(bookId);
 		if(result.isPresent())
 			return result.get();
 		else
@@ -25,9 +26,9 @@ public class DefaultBookService implements BookService {
 	}
 
 	@Override
-	public List<SimpleBook> getAll() {
+	public List<Book> getAll() {
 		// TODO Auto-generated method stub
-		return (List<SimpleBook>) bookRepo.findAll();
+		return (List<Book>) bookRepo.findAll();
 	}
 }
 
