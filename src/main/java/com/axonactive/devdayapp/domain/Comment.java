@@ -15,10 +15,10 @@ public class Comment implements Serializable {
     private BookDetail bookDetail;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="user_id", nullable=true)
     private User user;
 
-    @Column
+    @Column (length = 500)
     private String content;
 
     @Column

@@ -14,7 +14,7 @@ public class Book implements Serializable {
     @Column (length = 500)
     private String name;
 
-    @Column (length = 750)
+    @Column (length = 500)
     private String author;
 
     @Column (name = "serial_number")
