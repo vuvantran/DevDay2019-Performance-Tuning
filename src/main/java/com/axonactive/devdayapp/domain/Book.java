@@ -11,18 +11,19 @@ public class Book implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    @Column
+    @Column (length = 500)
     private String name;
 
-    @Column
+    @Column (length = 750)
     private String author;
 
     @Column (name = "serial_number")
     private String serialNumber;
 
+    @Basic(fetch =  FetchType.LAZY)
     @OneToMany(mappedBy="book")
     private List<BookDetail> details;
-
+    @Basic(fetch =  FetchType.LAZY)
     @ManyToMany(mappedBy="bookInWishList")
     private List<User> subscribers;
 

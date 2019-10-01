@@ -2,6 +2,10 @@ package com.axonactive.devdayapp;
 
 import com.axonactive.devdayapp.domain.Book;
 import com.axonactive.devdayapp.domain.Comment;
+import com.axonactive.devdayapp.domain.SimpleBook;
+import com.axonactive.devdayapp.service.BookService;
+import com.axonactive.devdayapp.service.DefaultBookService;
+
 import java.util.List;
 import java.util.ArrayList;
 import org.springframework.boot.*;
@@ -23,16 +27,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class EntryPoint {
 
     private static final String API_ROOT = "/library-core/api/books";
+    @Autowired
+    private BookService bookService;
 
 	@RequestMapping(path = API_ROOT, method = RequestMethod.GET)
-	public List<Book> getBooks() {
-        Book book = new Book();
-        book.setId(123l);
-        book.setName("Used to be king");
-        book.setAuthor("Thomas Hamstor");
-        List<Book> books = new ArrayList<>();
-        books.add(book);
-		return books;
+	public List<SimpleBook> getBooks() {
+        
+		return bookService.getAll();
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}", method = RequestMethod.GET)
