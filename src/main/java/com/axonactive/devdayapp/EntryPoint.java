@@ -6,13 +6,17 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import com.axonactive.devdayapp.domain.Book;
-import com.axonactive.devdayapp.domain.Comment;
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.dto.CommentDto;
+import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.service.SearchingService;
 
 @RestController
 @EnableAutoConfiguration
@@ -21,20 +25,23 @@ public class EntryPoint {
 
     private static final String API_ROOT = "/library-core/api/books";
 
+    @Autowired
+    private SearchingService searchingService;
+
 	@RequestMapping(path = API_ROOT, method = RequestMethod.GET)
-	public List<Book> getBooks() {
-        Book book = new Book();
+	public List<BookDto> getBooks() {
+        BookDto book = new BookDto();
         book.setId(123l);
         book.setName("Used to be king");
         book.setAuthor("Thomas Hamstor");
-        List<Book> books = new ArrayList<>();
+        List<BookDto> books = new ArrayList<>();
         books.add(book);
 		return books;
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}", method = RequestMethod.GET)
-	public Book getBookById(@PathVariable("bookId") Long bookId) {
-        Book book = new Book();
+	public BookDto getBookById(@PathVariable("bookId") Long bookId) {
+        BookDto book = new BookDto();
         book.setId(bookId);
         book.setName("Used to be king");
         book.setAuthor("Thomas Hamstor");
@@ -42,24 +49,18 @@ public class EntryPoint {
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}/comments", method = RequestMethod.GET)
-	public List<Comment> getCommentByBookId(@PathVariable("bookId") Long bookId) {
-        Comment comment = new Comment();
+	public List<CommentDto> getCommentByBookId(@PathVariable("bookId") Long bookId) {
+        CommentDto comment = new CommentDto();
         comment.setId(195l);
         comment.setContent("Good book!");
-        List<Comment> comments = new ArrayList<>(0);
+        List<CommentDto> comments = new ArrayList<>(0);
         comments.add(comment);
         return comments;
 	}
 
 	@RequestMapping(path = API_ROOT + "/search", method = RequestMethod.POST)
-	public List<Book> searchBook() {
-        Book book = new Book();
-        book.setId(123l);
-        book.setName("Used to be king");
-        book.setAuthor("Thomas Hamstor");
-        List<Book> books = new ArrayList<>();
-        books.add(book);
-		return books;
+	public List<BookDto> searchBook(@RequestBody SearchingCriteria criteria) {
+        return searchingService.search(criteria);
 	}
 
 	public static void main(String[] args) {
