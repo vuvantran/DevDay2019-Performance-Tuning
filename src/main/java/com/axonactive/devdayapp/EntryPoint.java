@@ -18,15 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.dto.CommentDto;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.SearchingService;
 
 
 @RestController
 @EnableAutoConfiguration
 @ComponentScan
-//@ComponentScan (basePackages = "com.axonactive.devdayapp")
-//@EnableJpaRepositories(basePackages ="com.axonactive.devdayapp.repo")
-//@EntityScan(basePackages = "com.axonactive.devdayapp.domain" )
 public class EntryPoint {
 
     private static final String API_ROOT = "/library-core/api/books";
@@ -39,22 +37,12 @@ public class EntryPoint {
 	@RequestMapping(path = API_ROOT, method = RequestMethod.GET)
 
 	public List<BookDto> getBooks() {
-        BookDto book = new BookDto();
-        book.setId(123l);
-        book.setName("Used to be king");
-        book.setAuthor("Thomas Hamstor");
-        List<BookDto> books = new ArrayList<>();
-        books.add(book);
-		return books;
+		return bookService.getAll();
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}", method = RequestMethod.GET)
 	public BookDto getBookById(@PathVariable("bookId") Long bookId) {
-        BookDto book = new BookDto();
-        book.setId(bookId);
-        book.setName("Used to be king");
-        book.setAuthor("Thomas Hamstor");
-		return book;
+		return bookService.findById(bookId);
 
 	}
 
