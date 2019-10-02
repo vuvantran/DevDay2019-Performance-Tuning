@@ -24,13 +24,13 @@ public class BookDetail implements Serializable {
     private String description;
 
     @OneToMany(mappedBy="bookDetail")
-    List<Comment> comments;
+    private List<Comment> comments;
 
     @OneToMany(mappedBy="bookDetail")
-    List<Rating> ratings;
+    private List<Rating> ratings;
 
     @OneToMany(mappedBy="bookDetail")
-    List<Tag> tags;
+    private List<Tag> tags;
 
     public Long getId() {
         return id;
