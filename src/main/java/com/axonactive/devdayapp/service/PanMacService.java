@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.dto.BookDetailDto;
@@ -33,17 +32,13 @@ public class PanMacService extends ExternalService {
             String cover = book.getString("jacketUrl");
             String preface = book.getString("extractHtml");
 
-            BookDetailDto detail = new BookDetailDto();
-            detail.setCoverUrl(cover);
-            detail.setSource(BookSource.PANMAC);
-            detail.setDescription(preface);
-            List<BookDetailDto> details = new ArrayList<>(1);
-            details.add(detail);
-
-            BookDto bookDto = new BookDto();
-            bookDto.setName(name);
-            bookDto.setAuthor(author);
-            bookDto.setDetails(details);
+            BookDto bookDto = BookDto.createSingleBook()
+                .withName(name)
+                .withAuthor(author)
+                .withDescription(preface)
+                .withCoverUrl(cover)
+                .fromSource(BookSource.PANMAC)
+                .create();
 
             output.add(bookDto);
         }

@@ -24,11 +24,10 @@ public class DefaultBookService implements BookService {
 
     @Autowired
     private BookRepository bookRepo;
+
     @Override
 	public BookDto findById(long bookId) {
-		// TODO Auto-generated method stub
 		Optional<Book> result = bookRepo.findById(bookId);
-		
 		if(result.isPresent())
 			return Mapper.map(result.get(),  BookDto.class);
 		else
@@ -37,23 +36,23 @@ public class DefaultBookService implements BookService {
 
 	@Override
 	public List<BookDto> getAll() {
-		// TODO Auto-generated method stub
 		return  StreamSupport.stream(bookRepo.findAll().spliterator(),false)
 			.map(book -> Mapper.map(book, BookDto.class))
             .collect(Collectors.toList());
 	}
 
+    @Override
     public List<BookDto> findBooksWithNameContain(String keyword) {
         List<BookDto> books = new LinkedList<>();
         for (Book book: bookRepo.findBooksWithNameContain(keyword)) {
             BookDto bookDto = BookDto.fromEntity( book );
             List<BookDetailDto> detailDtos = new LinkedList<>();
+            bookDto.setDetails(detailDtos);
+            books.add(bookDto);
             if (book.getDetails() == null) continue;
             for (BookDetail detail: book.getDetails()) {
                 detailDtos.add( BookDetailDto.fromEntity( detail ) );
             }
-            bookDto.setDetails(detailDtos);
-            books.add(bookDto);
         }
         return books;
     }
