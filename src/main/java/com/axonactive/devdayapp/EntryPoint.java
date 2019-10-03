@@ -1,8 +1,10 @@
 package com.axonactive.devdayapp;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.dto.CommentDto;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.SearchingService;
+
 
 @RestController
 @EnableAutoConfiguration
@@ -24,28 +28,22 @@ import com.axonactive.devdayapp.service.SearchingService;
 public class EntryPoint {
 
     private static final String API_ROOT = "/library-core/api/books";
+    @Autowired
+    private BookService bookService;
 
     @Autowired
     private SearchingService searchingService;
 
 	@RequestMapping(path = API_ROOT, method = RequestMethod.GET)
+
 	public List<BookDto> getBooks() {
-        BookDto book = new BookDto();
-        book.setId(123l);
-        book.setName("Used to be king");
-        book.setAuthor("Thomas Hamstor");
-        List<BookDto> books = new ArrayList<>();
-        books.add(book);
-		return books;
+		return bookService.getAll();
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}", method = RequestMethod.GET)
 	public BookDto getBookById(@PathVariable("bookId") Long bookId) {
-        BookDto book = new BookDto();
-        book.setId(bookId);
-        book.setName("Used to be king");
-        book.setAuthor("Thomas Hamstor");
-		return book;
+		return bookService.findById(bookId);
+
 	}
 
 	@RequestMapping(path = API_ROOT + "/{bookId}/comments", method = RequestMethod.GET)
@@ -66,5 +64,6 @@ public class EntryPoint {
 	public static void main(String[] args) {
 		SpringApplication.run(EntryPoint.class, args);
 	}
+
 }
 
