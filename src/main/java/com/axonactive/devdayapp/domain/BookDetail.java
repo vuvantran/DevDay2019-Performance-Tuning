@@ -20,7 +20,7 @@ public class BookDetail implements Serializable {
     @Column
     private BookSource source;
 
-    @Column
+    @Column (length = 500)
     private String description;
 
     @Column
