@@ -18,7 +18,7 @@ public abstract class ExternalService {
             JSONObject jsonResponse = new JSONObject(rawResponse);
             return extractBooks(jsonResponse);
         } catch(Exception e) {
-            // better handle for exception please
+            //TODO: better exception handling please!
             e.printStackTrace();
         }
         return Collections.emptyList();

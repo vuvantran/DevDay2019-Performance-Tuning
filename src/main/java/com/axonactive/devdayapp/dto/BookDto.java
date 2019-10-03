@@ -2,6 +2,8 @@ package com.axonactive.devdayapp.dto;
 
 import java.util.List;
 
+import com.axonactive.devdayapp.domain.Book;
+
 public class BookDto {
 
 	private Long id;
@@ -10,6 +12,19 @@ public class BookDto {
     private String serialNumber;
     private List<BookDetailDto> details;
     private List<UserDto> subscribers;
+
+    /**
+     * This function just pull out basic information of the entity only
+     * for others information, please do it yourself
+     */
+    public static BookDto fromEntity(Book entity) {
+        BookDto dto = new BookDto();
+        dto.id = entity.getId();
+        dto.name = entity.getName();
+        dto.author = entity.getAuthor();
+        dto.serialNumber = entity.getSerialNumber();
+        return dto;
+    }
 
     public Long getId() {
         return id;

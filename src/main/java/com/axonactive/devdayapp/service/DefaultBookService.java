@@ -1,6 +1,7 @@
 package com.axonactive.devdayapp.service;
 
 import java.util.List;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.axonactive.devdayapp.domain.Book;
+import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.repo.BookRepository;
 import com.axonactive.devdayapp.util.Mapper;
@@ -42,14 +44,18 @@ public class DefaultBookService implements BookService {
 	}
 
     public List<BookDto> findBooksWithNameContain(String keyword) {
-        return bookRepo.findBooksWithNameContain(keyword).stream()
-                    .map(book -> Mapper.map(book, BookDto.class))
-                    .peek(book -> {
-                        for (BookDetailDto detail: book.getDetails()) {
-                            detail.setBook(null);
-                        }
-                    })
-                    .collect(Collectors.toList());
+        List<BookDto> books = new LinkedList<>();
+        for (Book book: bookRepo.findBooksWithNameContain(keyword)) {
+            BookDto bookDto = BookDto.fromEntity( book );
+            List<BookDetailDto> detailDtos = new LinkedList<>();
+            if (book.getDetails() == null) continue;
+            for (BookDetail detail: book.getDetails()) {
+                detailDtos.add( BookDetailDto.fromEntity( detail ) );
+            }
+            bookDto.setDetails(detailDtos);
+            books.add(bookDto);
+        }
+        return books;
     }
 }
 
