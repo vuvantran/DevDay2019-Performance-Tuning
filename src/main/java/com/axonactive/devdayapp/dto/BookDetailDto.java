@@ -12,6 +12,7 @@ public class BookDetailDto {
     private List<CommentDto> comments;
     private List<RatingDto> ratings;
     private List<TagDto> tags;
+    private String coverUrl;
 
     public Long getId() {
         return id;
@@ -25,7 +26,7 @@ public class BookDetailDto {
         return book;
     }
 
-    public void setBookId(BookDto book) {
+    public void setBook(BookDto book) {
         this.book = book;
     }
 
@@ -43,6 +44,14 @@ public class BookDetailDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
     public List<CommentDto> getComments() {

@@ -23,6 +23,9 @@ public class BookDetail implements Serializable {
     @Column (length = 500)
     private String description;
 
+    @Column
+    private String coverUrl;
+
     @OneToMany(mappedBy="bookDetail")
     private List<Comment> comments;
 
@@ -44,7 +47,7 @@ public class BookDetail implements Serializable {
         return book;
     }
 
-    public void setBookId(Book book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 
@@ -62,6 +65,14 @@ public class BookDetail implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCoverUrl() {
+        return coverUrl;
+    }
+
+    public void setCoverUrl(String coverUrl) {
+        this.coverUrl = coverUrl;
     }
 
     public List<Comment> getComments() {
