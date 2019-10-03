@@ -12,20 +12,17 @@ import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.enums.BookSource;
 
-public class PanMacService implements ExternalService {
+public class PanMacService extends ExternalService {
 
     private static final String BASE_URL = "http://extracts.panmacmillan.com/getextracts?titlecontains=";
 
     @Override
-    public List<BookDto> search(String keyword) {
-        String url = BASE_URL + keyword;
-        RestTemplate restTemplate = new RestTemplate();
-        String rawResponse = restTemplate.getForObject(url, String.class);
-        JSONObject jsonResponse = new JSONObject(rawResponse);
-        return extractBooks(jsonResponse);
+    protected String buildQueryUrl(String keyword) {
+        return BASE_URL + keyword;
     }
 
-    private List<BookDto> extractBooks(JSONObject response) {
+    @Override
+    protected List<BookDto> extractBooks(JSONObject response) {
         List<BookDto> output = new LinkedList<>();
         JSONArray books = response.getJSONArray("Extracts");
         int len = books.length();
@@ -38,7 +35,7 @@ public class PanMacService implements ExternalService {
 
             BookDetailDto detail = new BookDetailDto();
             detail.setCoverUrl(cover);
-            detail.setSource(BookSource.PANMACMILLAN);
+            detail.setSource(BookSource.PANMAC);
             detail.setDescription(preface);
             List<BookDetailDto> details = new ArrayList<>(1);
             details.add(detail);
