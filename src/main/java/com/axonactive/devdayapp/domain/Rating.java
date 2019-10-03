@@ -9,7 +9,7 @@ public class Rating implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-
+    @Basic(fetch =  FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name="book_detail_id", nullable=false)
     private BookDetail bookDetail;
