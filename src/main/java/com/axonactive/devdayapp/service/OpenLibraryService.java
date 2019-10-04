@@ -24,7 +24,8 @@ public class OpenLibraryService extends ExternalService {
     }
 
     @Override
-    protected List<BookDto> extractBooks(JSONObject response) {
+    protected List<BookDto> extractBooks(String rawResponse) {
+        JSONObject response = new JSONObject(rawResponse);
         List<BookDto> books = new LinkedList<>();
         JSONArray docs = response.getJSONArray("docs");
         int len = docs.length();

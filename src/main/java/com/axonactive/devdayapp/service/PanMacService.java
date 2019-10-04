@@ -21,7 +21,8 @@ public class PanMacService extends ExternalService {
     }
 
     @Override
-    protected List<BookDto> extractBooks(JSONObject response) {
+    protected List<BookDto> extractBooks(String rawResponse) {
+        JSONObject response = new JSONObject(rawResponse);
         List<BookDto> output = new LinkedList<>();
         JSONArray books = response.getJSONArray("Extracts");
         int len = books.length();

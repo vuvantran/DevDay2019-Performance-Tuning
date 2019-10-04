@@ -3,7 +3,6 @@ package com.axonactive.devdayapp.service;
 import java.util.List;
 import java.util.Collections;
 
-import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
@@ -15,8 +14,7 @@ public abstract class ExternalService {
             String url = buildQueryUrl(keyword);
             RestTemplate restTemplate = new RestTemplate();
             String rawResponse = restTemplate.getForObject(url, String.class);
-            JSONObject jsonResponse = new JSONObject(rawResponse);
-            return extractBooks(jsonResponse);
+            return extractBooks(rawResponse);
         } catch(Exception e) {
             //TODO: better exception handling please!
             e.printStackTrace();
@@ -26,7 +24,7 @@ public abstract class ExternalService {
 
     abstract protected String buildQueryUrl(String keyword);
 
-    abstract protected List<BookDto> extractBooks(JSONObject jsonResponse);
+    abstract protected List<BookDto> extractBooks(String response);
 
 }
 
