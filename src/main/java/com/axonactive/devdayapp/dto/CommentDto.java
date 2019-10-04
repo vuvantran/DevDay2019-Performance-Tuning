@@ -6,6 +6,8 @@ public class CommentDto {
     private UserDto user;
     private String content;
     private CommentDto parent;
+    
+    private Long parentId;
 
     public Long getId() {
         return id;
@@ -46,5 +48,13 @@ public class CommentDto {
     public void setParent(CommentDto parent) {
         this.parent = parent;
     }
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
 }
 

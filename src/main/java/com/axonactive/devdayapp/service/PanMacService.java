@@ -32,6 +32,7 @@ public class PanMacService extends ExternalService {
             String cover = book.getString("jacketUrl");
             String preface = book.getString("extractHtml");
 
+
             BookDto bookDto = BookDto.createSingleBook()
                 .withName(name)
                 .withAuthor(author)

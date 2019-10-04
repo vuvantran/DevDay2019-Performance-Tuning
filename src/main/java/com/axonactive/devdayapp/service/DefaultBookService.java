@@ -8,11 +8,13 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.axonactive.devdayapp.domain.Book;
 import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.repo.BookRepository;
+import com.axonactive.devdayapp.util.BookUtil;
 import com.axonactive.devdayapp.util.Mapper;
 
 import com.axonactive.devdayapp.dto.BookDto;
@@ -29,7 +31,7 @@ public class DefaultBookService implements BookService {
 	public BookDto findById(long bookId) {
 		Optional<Book> result = bookRepo.findById(bookId);
 		if(result.isPresent())
-			return Mapper.map(result.get(),  BookDto.class);
+			return BookUtil.toFullBookDto(result.get());
 		else
 			return null;
 	}
@@ -37,7 +39,7 @@ public class DefaultBookService implements BookService {
 	@Override
 	public List<BookDto> getAll() {
 		return  StreamSupport.stream(bookRepo.findAll().spliterator(),false)
-			.map(book -> Mapper.map(book, BookDto.class))
+			.map(book -> BookUtil.toSimpleBookDto(book))
             .collect(Collectors.toList());
 	}
 

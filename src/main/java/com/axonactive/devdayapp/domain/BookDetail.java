@@ -13,7 +13,7 @@ public class BookDetail implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name="book_id", nullable=false)
     private Book book;
 
