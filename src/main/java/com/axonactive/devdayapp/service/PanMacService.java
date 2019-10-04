@@ -1,17 +1,18 @@
 package com.axonactive.devdayapp.service;
 
-import java.util.List;
 import java.util.LinkedList;
-import java.util.ArrayList;
-
-import org.json.JSONObject;
-import org.json.JSONArray;
+import java.util.List;
 
 import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.enums.BookSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class PanMacService extends ExternalService {
+    private static final Logger log = LogManager.getLogger(PanMacService.class);
 
     private static final String BASE_URL = "http://extracts.panmacmillan.com/getextracts?titlecontains=";
 
@@ -25,6 +26,7 @@ public class PanMacService extends ExternalService {
         List<BookDto> output = new LinkedList<>();
         JSONArray books = response.getJSONArray("Extracts");
         int len = books.length();
+        log.info("Found " + len + " books from PanMac.");
         for (int i = 0; i < len; ++i) {
             JSONObject book = books.getJSONObject(i);
             String name = book.getString("title");
@@ -32,7 +34,7 @@ public class PanMacService extends ExternalService {
             String cover = book.getString("jacketUrl");
             String preface = book.getString("extractHtml");
 
-
+            log.info(String.format(" Book %s, name=%s, author=%s", i+1, name, author));
             BookDto bookDto = BookDto.createSingleBook()
                 .withName(name)
                 .withAuthor(author)
@@ -44,6 +46,11 @@ public class PanMacService extends ExternalService {
             output.add(bookDto);
         }
         return output;
+    }
+
+    @Override
+    protected String getServiceName() {
+        return "PanMac";
     }
 
 }
