@@ -1,11 +1,17 @@
 package com.axonactive.devdayapp.domain;
 
-import java.util.List;
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
 @Table(name="books")
@@ -25,7 +31,6 @@ public class Book implements Serializable {
 
     
     @OneToMany(mappedBy="book",fetch =  FetchType.LAZY)
-    @JsonIgnoreProperties("book")
     private List<BookDetail> details;
     
     
