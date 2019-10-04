@@ -20,6 +20,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.dto.CommentDto;
+import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.service.BookService;
+import com.axonactive.devdayapp.service.CommentService;
+import com.axonactive.devdayapp.service.SearchingService;
 
 
 @RestController
@@ -33,6 +41,9 @@ public class EntryPoint {
 
     @Autowired
     private SearchingService searchingService;
+    
+    @Autowired
+    private CommentService commentService;
 
 	@RequestMapping(path = API_ROOT, method = RequestMethod.GET)
 
@@ -50,13 +61,8 @@ public class EntryPoint {
 
 	@RequestMapping(path = API_ROOT + "/{bookId}/comments", method = RequestMethod.GET)
 	public List<CommentDto> getCommentByBookId(@PathVariable("bookId") Long bookId) {
-		CommentDto comment = new CommentDto();
-        comment.setId(195l);
-        comment.setContent("Good book!");
-        List<CommentDto> comments = new ArrayList<>(0);
-        comments.add(comment);
-		log.info(String.format("Found %s comments of bookId=%s", 1, bookId));
-        return comments;
+        log.info(String.format("Searching for comments of bookId=%s", 1, bookId));
+        return commentService.getCommentByBookId(bookId);
 	}
 
 	@RequestMapping(path = API_ROOT + "/search", method = RequestMethod.POST)

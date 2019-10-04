@@ -34,6 +34,7 @@ ALTER SEQUENCE public.book_comments_id_seq OWNED BY public.book_comments.id;
 CREATE TABLE public.book_details (
     id bigint NOT NULL,
     description character varying(500),
+    cover_url character varying,
     source integer,
     book_id bigint NOT NULL
 );
