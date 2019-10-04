@@ -24,8 +24,8 @@ public class DefaultSearchingService implements SearchingService {
 
     private static final ImmutableList<ExternalService> EXTERNAL_SERVICE = ImmutableList.of(
             new PanMacService(),
-            /new OpenLibraryService(),
-            /new BookMoochService(),
+            new OpenLibraryService(),
+            new BookMoochService(),
             new ITBookStoreService()
     );
     
@@ -38,24 +38,25 @@ public class DefaultSearchingService implements SearchingService {
         long startPot = System.currentTimeMillis();
         List<BookDto> internalBooks = bookService.findBooksWithNameContain(keyword);
         logTheTime(startPot, "internal");
-        log.info(String.format("Found %s books in our DB", internalBooks.size()));
+        log.info("Found {} books in our DB", internalBooks.size());
         List<BookDto> output = new LinkedList<>();
         output.addAll(internalBooks);
         for (ExternalService exService: EXTERNAL_SERVICE) {
+            String exServiceName = exService.getClass().getCanonicalName();
             startPot = System.currentTimeMillis();
             List<BookDto> exBooks = exService.search(keyword);
-            logTheTime(startPot, exService.getClass().getCanonicalName());
-            log.info(String.format("Found %s books in %s service", exBooks.size()));
+            logTheTime(startPot, exServiceName);
+            log.info("Found {} books in {} service", exBooks.size(), exServiceName);
             output.addAll(exBooks);
         }
-        log.info(String.format("Total found %s books in our DB and external services", output.size()));
+        log.info("Total found {} books in our DB and external services", output.size());
         return output;
     }
 
     private void logTheTime(long startPot, String name) {
-        log.info("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
-        log.info(">>> " + name + " take: " + (System.currentTimeMillis() - startPot));
-        log.info("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
+        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
+        System.out.println(">>> source: "+name+" take: "+(System.currentTimeMillis() - startPot)+" ms");
+        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
     }
 }
 
