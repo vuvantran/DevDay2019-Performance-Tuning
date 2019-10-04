@@ -47,12 +47,16 @@ public class BookMoochService extends ExternalService {
                 .withAuthor(author)
                 .withDescription(preface)
                 .withCoverUrl(coverUrl)
-                .fromSource(BookSource.BOOK_MOONCH)
+                .fromSource(BookSource.BOOK_MOOCH)
                 .create();
             output.add(bookDto);
         }
         return output;
     }
 
+    @Override
+    protected String getServiceName() {
+        return "BookMooch";
+    }
 }
 

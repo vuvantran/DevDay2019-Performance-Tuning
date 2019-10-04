@@ -54,5 +54,9 @@ public class ITBookStoreService extends ExternalService {
         return output;
     }
 
+    @Override
+    protected String getServiceName() {
+        return "IT Book Store";
+    }
 }
 

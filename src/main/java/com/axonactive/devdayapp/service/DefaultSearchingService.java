@@ -1,13 +1,8 @@
 package com.axonactive.devdayapp.service;
 
-import java.util.List;
 import java.util.LinkedList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import com.google.common.collect.ImmutableList;
+import java.util.List;
 
-import com.axonactive.devdayapp.util.Mapper;
-import com.axonactive.devdayapp.domain.Book;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.ExternalService;
@@ -17,8 +12,15 @@ import com.axonactive.devdayapp.service.BookMoochService;
 import com.axonactive.devdayapp.service.ITBookStoreService;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
 
+import com.google.common.collect.ImmutableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 @Component
 public class DefaultSearchingService implements SearchingService {
+    private static final Logger log = LogManager.getLogger(DefaultSearchingService.class);
 
     private static final ImmutableList<ExternalService> EXTERNAL_SERVICE = ImmutableList.of(
             new PanMacService(),
@@ -32,24 +34,28 @@ public class DefaultSearchingService implements SearchingService {
 
     public List<BookDto> search(SearchingCriteria criteria) {
         String keyword = criteria.getKeyword();
+        log.info("Search for books contain keyword: " + keyword);
         long startPot = System.currentTimeMillis();
         List<BookDto> internalBooks = bookService.findBooksWithNameContain(keyword);
         logTheTime(startPot, "internal");
+        log.info(String.format("Found %s books in our DB", internalBooks.size()));
         List<BookDto> output = new LinkedList<>();
         output.addAll(internalBooks);
         for (ExternalService exService: EXTERNAL_SERVICE) {
             startPot = System.currentTimeMillis();
             List<BookDto> exBooks = exService.search(keyword);
             logTheTime(startPot, exService.getClass().getCanonicalName());
+            log.info(String.format("Found %s books in %s service", exBooks.size()));
             output.addAll(exBooks);
         }
+        log.info(String.format("Total found %s books in our DB and external services", output.size()));
         return output;
     }
 
     private void logTheTime(long startPot, String name) {
-        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
-        System.out.println(">>> " + name + " take: " + (System.currentTimeMillis() - startPot));
-        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
+        log.info("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
+        log.info(">>> " + name + " take: " + (System.currentTimeMillis() - startPot));
+        log.info("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
     }
 }
 
