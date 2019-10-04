@@ -13,8 +13,5 @@ public interface BookRepository extends CrudRepository<Book, Long> {
 
     @Query("SELECT b FROM Book b WHERE UPPER(b.name) LIKE CONCAT('%', UPPER(?1), '%')")
     List<Book> findBooksWithNameContain(String keyword);
-    
-    @Query ("SELECT b FROM Book b WHERE b.id = ?1")
-    Book getBookById(long id);
 }
 

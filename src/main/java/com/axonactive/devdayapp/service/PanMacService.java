@@ -6,26 +6,22 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.enums.BookSource;
 
-public class PanMacService implements ExternalService {
+public class PanMacService extends ExternalService {
 
     private static final String BASE_URL = "http://extracts.panmacmillan.com/getextracts?titlecontains=";
 
     @Override
-    public List<BookDto> search(String keyword) {
-        String url = BASE_URL + keyword;
-        RestTemplate restTemplate = new RestTemplate();
-        String rawResponse = restTemplate.getForObject(url, String.class);
-        JSONObject jsonResponse = new JSONObject(rawResponse);
-        return extractBooks(jsonResponse);
+    protected String buildQueryUrl(String keyword) {
+        return BASE_URL + keyword;
     }
 
-    private List<BookDto> extractBooks(JSONObject response) {
+    @Override
+    protected List<BookDto> extractBooks(JSONObject response) {
         List<BookDto> output = new LinkedList<>();
         JSONArray books = response.getJSONArray("Extracts");
         int len = books.length();
@@ -36,17 +32,14 @@ public class PanMacService implements ExternalService {
             String cover = book.getString("jacketUrl");
             String preface = book.getString("extractHtml");
 
-            BookDetailDto detail = new BookDetailDto();
-            detail.setCoverUrl(cover);
-            detail.setSource(BookSource.PANMAC);
-            detail.setDescription(preface);
-            List<BookDetailDto> details = new ArrayList<>(1);
-            details.add(detail);
 
-            BookDto bookDto = new BookDto();
-            bookDto.setName(name);
-            bookDto.setAuthor(author);
-            bookDto.setDetails(details);
+            BookDto bookDto = BookDto.createSingleBook()
+                .withName(name)
+                .withAuthor(author)
+                .withDescription(preface)
+                .withCoverUrl(cover)
+                .fromSource(BookSource.PANMAC)
+                .create();
 
             output.add(bookDto);
         }

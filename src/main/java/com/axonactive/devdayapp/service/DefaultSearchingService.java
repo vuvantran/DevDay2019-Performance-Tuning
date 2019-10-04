@@ -12,13 +12,15 @@ import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.ExternalService;
 import com.axonactive.devdayapp.service.PanMacService;
+import com.axonactive.devdayapp.service.OpenLibraryService;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
 
 @Component
 public class DefaultSearchingService implements SearchingService {
 
     private static final ImmutableList<ExternalService> EXTERNAL_SERVICE = ImmutableList.of(
-            new PanMacService()
+            new PanMacService(),
+            new OpenLibraryService()
     );
     
     @Autowired

@@ -1,8 +1,9 @@
 package com.axonactive.devdayapp.dto;
 
-import com.axonactive.devdayapp.enums.BookSource;
-
 import java.util.List;
+
+import com.axonactive.devdayapp.enums.BookSource;
+import com.axonactive.devdayapp.domain.BookDetail;
 
 public class BookDetailDto {
 	private Long id;
@@ -13,6 +14,19 @@ public class BookDetailDto {
     private List<RatingDto> ratings;
     private List<TagDto> tags;
     private String coverUrl;
+
+    /**
+     * This function just pull out basic information of the entity only
+     * for others information, please do it yourself
+     */
+    public static BookDetailDto fromEntity(BookDetail entity) {
+        BookDetailDto dto = new BookDetailDto();
+        dto.id = entity.getId();
+        dto.source = entity.getSource();
+        dto.description = entity.getDescription();
+        dto.coverUrl = entity.getCoverUrl();
+        return dto;
+    }
 
     public Long getId() {
         return id;
