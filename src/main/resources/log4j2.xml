@@ -23,7 +23,7 @@
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="1" modulate="true" />
-            </Policies>W
+            </Policies>
         </RollingFile>
          
         <RollingFile name="exceptDebugLog" fileName="${LOG_DIR}/${LOG_FILENAME}.log"

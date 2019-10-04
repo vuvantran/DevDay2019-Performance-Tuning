@@ -20,10 +20,11 @@ public class Book implements Serializable {
     @Column (name = "serial_number")
     private String serialNumber;
 
-    @Basic(fetch =  FetchType.LAZY)
-    @OneToMany(mappedBy="book")
+    
+    @OneToMany(mappedBy="book",fetch =  FetchType.LAZY)
     private List<BookDetail> details;
-    @Basic(fetch =  FetchType.LAZY)
+    
+    
     @ManyToMany(mappedBy="bookInWishList")
     private List<User> subscribers;
 
