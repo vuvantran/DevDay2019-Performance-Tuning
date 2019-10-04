@@ -4,6 +4,9 @@ import java.util.List;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name="books")
 public class Book implements Serializable {
@@ -20,10 +23,12 @@ public class Book implements Serializable {
     @Column (name = "serial_number")
     private String serialNumber;
 
-    @Basic(fetch =  FetchType.LAZY)
-    @OneToMany(mappedBy="book")
+    
+    @OneToMany(mappedBy="book",fetch =  FetchType.LAZY)
+    @JsonIgnoreProperties("book")
     private List<BookDetail> details;
-    @Basic(fetch =  FetchType.LAZY)
+    
+    
     @ManyToMany(mappedBy="bookInWishList")
     private List<User> subscribers;
 

@@ -38,7 +38,7 @@ public class PanMacService implements ExternalService {
 
             BookDetailDto detail = new BookDetailDto();
             detail.setCoverUrl(cover);
-            detail.setSource(BookSource.PANMACMILLAN);
+            detail.setSource(BookSource.PANMAC);
             detail.setDescription(preface);
             List<BookDetailDto> details = new ArrayList<>(1);
             details.add(detail);

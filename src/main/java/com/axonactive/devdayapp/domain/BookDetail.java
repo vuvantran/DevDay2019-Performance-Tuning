@@ -1,6 +1,9 @@
 package com.axonactive.devdayapp.domain;
 
 import com.axonactive.devdayapp.enums.BookSource;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 import java.io.Serializable;
@@ -13,8 +16,10 @@ public class BookDetail implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    @ManyToOne
+    
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name="book_id", nullable=false)
+    @JsonIgnoreProperties("details")
     private Book book;
 
     @Column

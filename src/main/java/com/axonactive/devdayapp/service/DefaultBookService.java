@@ -7,10 +7,12 @@ import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.axonactive.devdayapp.domain.Book;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.repo.BookRepository;
+import com.axonactive.devdayapp.util.BookUtil;
 import com.axonactive.devdayapp.util.Mapper;
 
 import com.axonactive.devdayapp.dto.BookDto;
@@ -23,12 +25,12 @@ public class DefaultBookService implements BookService {
     @Autowired
     private BookRepository bookRepo;
     @Override
-	public BookDto findById(long bookId) {
+    public BookDto findById(long bookId) {
 		// TODO Auto-generated method stub
-		Optional<Book> result = bookRepo.findById(bookId);
+		Book result = bookRepo.getBookById(bookId);
 		
-		if(result.isPresent())
-			return Mapper.map(result.get(),  BookDto.class);
+		if(result != null)
+			return BookUtil.toFullBookDto(result);
 		else
 			return null;
 	}
@@ -37,7 +39,7 @@ public class DefaultBookService implements BookService {
 	public List<BookDto> getAll() {
 		// TODO Auto-generated method stub
 		return  StreamSupport.stream(bookRepo.findAll().spliterator(),false)
-			.map(book -> Mapper.map(book, BookDto.class))
+			.map(book -> BookUtil.toSimpleBookDto(book))
             .collect(Collectors.toList());
 	}
 
