@@ -41,7 +41,10 @@ public class BookMoochService extends ExternalService {
         int len = response.length();
         for (int i = 0; i < len; ++i) {
             JSONObject book = response.getJSONObject(i);
-            String author = book.getString("Author");
+            String author = "";
+            try {
+                author = book.getString("Author");
+            } catch(JSONException ignored) {}
             String preface = "";
             try {
                 preface = book.getString("EditorialReview_Content");
