@@ -2,6 +2,8 @@ package com.axonactive.devdayapp.service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -34,6 +36,8 @@ public class DefaultSearchingService implements SearchingService {
             new BookMoochService(),
             new ITBookStoreService()
     );
+    private static final Map<String, List<BookDto>> CACHED_RESULTS = new HashMap<>();
+    private static final int ALLOWED_ENTRIES = 1000;
     
     @Autowired
     private BookService bookService;
@@ -41,6 +45,14 @@ public class DefaultSearchingService implements SearchingService {
     public List<BookDto> search(SearchingCriteria criteria) {
         String keyword = criteria.getKeyword();
         log.info("Search for books contain keyword: " + keyword);
+        List<BookDto> cachedBooks = CACHED_RESULTS.get(keyword);
+        if (cachedBooks != null) {
+            log.info(cachedBooks.size() + " books loaded from cache's storage");
+            return cachedBooks;
+        }
+        if (CACHED_RESULTS.size() > ALLOWED_ENTRIES) {
+            CACHED_RESULTS.clear();
+        }
         List<BookDto> output = new LinkedList<>();
         Future<List<BookDto>>[] resultCacher = new Future[EXTERNAL_SERVICE.size() + 1];
         resultCacher[0] = EXECUTOR.submit(new InternalSearchRunner(bookService, keyword));
@@ -57,6 +69,7 @@ public class DefaultSearchingService implements SearchingService {
             } catch(InterruptedException | ExecutionException ignored) {}
         }
         log.info("Total found {} books in our DB and external services", output.size());
+        CACHED_RESULTS.put(keyword, output);
         return output;
     }
 }
