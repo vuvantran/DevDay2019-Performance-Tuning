@@ -2,6 +2,10 @@ package com.axonactive.devdayapp.service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ExecutionException;
 
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.service.BookService;
@@ -10,6 +14,7 @@ import com.axonactive.devdayapp.service.PanMacService;
 import com.axonactive.devdayapp.service.OpenLibraryService;
 import com.axonactive.devdayapp.service.BookMoochService;
 import com.axonactive.devdayapp.service.ITBookStoreService;
+import com.axonactive.devdayapp.service.InternalSearchRunner;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
 
 import com.google.common.collect.ImmutableList;
@@ -22,6 +27,7 @@ import org.springframework.stereotype.Component;
 public class DefaultSearchingService implements SearchingService {
     private static final Logger log = LogManager.getLogger(DefaultSearchingService.class);
 
+    private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
     private static final ImmutableList<ExternalService> EXTERNAL_SERVICE = ImmutableList.of(
             new PanMacService(),
             new OpenLibraryService(),
@@ -35,28 +41,23 @@ public class DefaultSearchingService implements SearchingService {
     public List<BookDto> search(SearchingCriteria criteria) {
         String keyword = criteria.getKeyword();
         log.info("Search for books contain keyword: " + keyword);
-        long startPot = System.currentTimeMillis();
-        List<BookDto> internalBooks = bookService.findBooksWithNameContain(keyword);
-        logTheTime(startPot, "internal");
-        log.info("Found {} books in our DB", internalBooks.size());
         List<BookDto> output = new LinkedList<>();
-        output.addAll(internalBooks);
+        Future<List<BookDto>>[] resultCacher = new Future[EXTERNAL_SERVICE.size() + 1];
+        resultCacher[0] = EXECUTOR.submit(new InternalSearchRunner(bookService, keyword));
+        int i = 1;
         for (ExternalService exService: EXTERNAL_SERVICE) {
-            String exServiceName = exService.getClass().getCanonicalName();
-            startPot = System.currentTimeMillis();
-            List<BookDto> exBooks = exService.search(keyword);
-            logTheTime(startPot, exServiceName);
-            log.info("Found {} books in {} service", exBooks.size(), exServiceName);
-            output.addAll(exBooks);
+            ExternalService searchInstance = exService.createSearchInstance(keyword);
+            resultCacher[i] = EXECUTOR.submit( searchInstance );
+            ++i;
+        }
+        for (i = 0; i < resultCacher.length; ++i) {
+            try {
+                List<BookDto> resultOfSearch = resultCacher[i].get();
+                output.addAll(resultOfSearch);
+            } catch(InterruptedException | ExecutionException ignored) {}
         }
         log.info("Total found {} books in our DB and external services", output.size());
         return output;
-    }
-
-    private void logTheTime(long startPot, String name) {
-        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
-        System.out.println(">>> source: "+name+" take: "+(System.currentTimeMillis() - startPot)+" ms");
-        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
     }
 }
 

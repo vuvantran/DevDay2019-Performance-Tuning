@@ -18,6 +18,19 @@ public class ITBookStoreService extends ExternalService {
     private static final String BASE_URL = "https://api.itbook.store/1.0/search/";
     private static final String GET_BOOK_URL = "https://api.itbook.store/1.0/books/";
 
+    public ITBookStoreService() {
+        super("");
+    }
+
+    public ITBookStoreService(String kw) {
+        super(kw);
+    }
+
+    @Override
+    public ExternalService createSearchInstance(String kw) {
+        return new ITBookStoreService(kw);
+    }
+
     @Override
     protected String buildQueryUrl(String keyword) {
         return BASE_URL + keyword;

@@ -16,6 +16,19 @@ public class PanMacService extends ExternalService {
 
     private static final String BASE_URL = "http://extracts.panmacmillan.com/getextracts?titlecontains=";
 
+    public PanMacService() {
+        super("");
+    }
+
+    private PanMacService(String kw) {
+        super(kw);
+    }
+
+    @Override
+    public ExternalService createSearchInstance(String kw) {
+        return new PanMacService(kw);
+    }
+
     @Override
     protected String buildQueryUrl(String keyword) {
         return BASE_URL + keyword;

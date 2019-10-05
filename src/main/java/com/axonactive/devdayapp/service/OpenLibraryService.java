@@ -18,6 +18,19 @@ public class OpenLibraryService extends ExternalService {
     private static final String BASE_URL = "http://openlibrary.org/search.json?title=";
     private static final String COVER_URL = "https://covers.openlibrary.org/w/id/{cid}-L.jpg";
 
+    public OpenLibraryService() {
+        super("");
+    }
+
+    private OpenLibraryService(String kw) {
+        super(kw);
+    }
+
+    @Override
+    public ExternalService createSearchInstance(String kw) {
+        return new OpenLibraryService(kw);
+    }
+
     @Override
     protected String buildQueryUrl(String keyword) {
         return BASE_URL + keyword;

@@ -15,6 +15,19 @@ public class BookMoochService extends ExternalService {
 
     private static final String BASE_URL = "http://api.bookmooch.com/api/search?db=bm&o=json&txt=";
 
+    public BookMoochService() {
+        super("");
+    }
+
+    private BookMoochService(String kw) {
+        super(kw);
+    }
+
+    @Override
+    public ExternalService createSearchInstance(String kw) {
+        return new BookMoochService(kw);
+    }
+
     @Override
     protected String buildQueryUrl(String keyword) {
         return BASE_URL + keyword;
