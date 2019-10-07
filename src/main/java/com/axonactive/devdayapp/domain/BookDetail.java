@@ -23,7 +23,7 @@ public class BookDetail implements Serializable {
     @Column (length = 500)
     private String description;
 
-    @Column
+    @Column(name="cover_url")
     private String coverUrl;
 
     @OneToMany(mappedBy="bookDetail")
