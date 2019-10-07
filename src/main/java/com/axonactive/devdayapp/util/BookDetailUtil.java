@@ -1,5 +1,7 @@
 package com.axonactive.devdayapp.util;
 
+import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,7 +22,11 @@ public class BookDetailUtil {
 				detailDto.setTags(StreamSupport.stream(bookDetail.getTags().spliterator(),false)
 						.map(tag -> TagUtil.toTagDto(tag))
 			            .collect(Collectors.toList()));
-				detailDto.setComments(StreamSupport.stream(bookDetail.getComments().spliterator(),false)
+			}catch(NullPointerException e) {
+				e.printStackTrace();
+			}
+			try {
+				detailDto.setComments(StreamSupport.stream(Optional.ofNullable(bookDetail.getComments()).orElse(Collections.emptyList()).spliterator(),false)
 						.map(comment -> CommentUtil.toCommentDto(comment))
 			            .collect(Collectors.toList()));
 				
@@ -31,3 +37,4 @@ public class BookDetailUtil {
 		}
 	}
 }
+

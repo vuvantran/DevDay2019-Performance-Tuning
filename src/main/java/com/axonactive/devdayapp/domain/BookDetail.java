@@ -20,6 +20,7 @@ public class BookDetail implements Serializable {
     @Column
     private BookSource source;
 
+    @Transient
     @Column (length = 500)
     private String description;
 
