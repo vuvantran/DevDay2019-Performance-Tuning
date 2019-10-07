@@ -1,26 +1,21 @@
 package com.axonactive.devdayapp.service;
 
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
+import com.axonactive.devdayapp.domain.Book;
+import com.axonactive.devdayapp.domain.BookDetail;
+import com.axonactive.devdayapp.dto.BookDetailDto;
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.repo.BookRepository;
+import com.axonactive.devdayapp.util.BookUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.axonactive.devdayapp.domain.Book;
-import com.axonactive.devdayapp.domain.BookDetail;
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.repo.BookRepository;
-import com.axonactive.devdayapp.util.BookUtil;
-import com.axonactive.devdayapp.util.Mapper;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.BookDetailDto;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 
 @Service
@@ -52,7 +47,7 @@ public class DefaultBookService implements BookService {
     public List<BookDto> findBooksWithNameContain(String keyword) {
         log.info(String.format("find all books contain keyword '%s'.", keyword));
         List<BookDto> books = new LinkedList<>();
-        for (Book book: bookRepo.findBooksWithNameContain(keyword)) {
+        for (Book book: bookRepo.findBooksWithNameContain("%".concat(keyword).concat("%"))) {
             BookDto bookDto = BookDto.fromEntity( book );
             List<BookDetailDto> detailDtos = new LinkedList<>();
             bookDto.setDetails(detailDtos);
