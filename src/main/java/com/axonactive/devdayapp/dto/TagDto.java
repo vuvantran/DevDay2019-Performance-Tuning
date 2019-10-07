@@ -1,9 +1,18 @@
 package com.axonactive.devdayapp.dto;
 
+import com.axonactive.devdayapp.domain.Tag;
+
 public class TagDto {
 	private Long id;
     private BookDetailDto bookDetail;
     private String name;
+
+    public static TagDto fromEntity(Tag entity) {
+        TagDto dto = new TagDto();
+        dto.id = entity.getId();
+        dto.name = entity.getName();
+        return dto;
+    }
 
     public Long getId() {
         return id;

@@ -1,9 +1,11 @@
 package com.axonactive.devdayapp.dto;
 
-import java.util.List;
-
-import com.axonactive.devdayapp.enums.BookSource;
 import com.axonactive.devdayapp.domain.BookDetail;
+import com.axonactive.devdayapp.domain.Tag;
+import com.axonactive.devdayapp.enums.BookSource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookDetailDto {
 	private Long id;
@@ -25,6 +27,12 @@ public class BookDetailDto {
         dto.source = entity.getSource();
         dto.description = entity.getDescription();
         dto.coverUrl = entity.getCoverUrl();
+        dto.tags = new ArrayList<>();
+        if (entity.getTags() != null) {
+            for (Tag tag: entity.getTags()) {
+                dto.tags.add(TagDto.fromEntity(tag));
+            }
+        }
         return dto;
     }
 
