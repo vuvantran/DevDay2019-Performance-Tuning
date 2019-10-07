@@ -8,7 +8,12 @@ import java.util.stream.StreamSupport;
 import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.dto.BookDetailDto;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class BookDetailUtil {
+	private static final Logger log = LogManager.getLogger(BookDetailUtil.class);
+	
 	public static BookDetailDto toBookDetailDto(BookDetail bookDetail) {
 		if(null == bookDetail) {
 			return null;
@@ -31,7 +36,7 @@ public class BookDetailUtil {
 			            .collect(Collectors.toList()));
 				
 			}catch(NullPointerException e) {
-				e.printStackTrace();
+				log.error("Error occurred: " + e);
 			}
 			return detailDto;
 		}
