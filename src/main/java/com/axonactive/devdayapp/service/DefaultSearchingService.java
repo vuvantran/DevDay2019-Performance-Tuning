@@ -54,9 +54,9 @@ public class DefaultSearchingService implements SearchingService {
     }
 
     private void logTheTime(long startPot, String name) {
-        log.info("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
-        log.info(">>> source: "+name+" take: "+(System.currentTimeMillis() - startPot)+" ms");
-        log.info("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
+        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
+        System.out.println(">>> source: "+name+" take: "+(System.currentTimeMillis() - startPot)+" ms");
+        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
     }
 }
 
