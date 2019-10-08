@@ -1,7 +1,10 @@
 package com.axonactive.devdayapp.enums;
 
 public enum BookSource {
-    INTERNAL,
+    AAHCM,
+    AACT,
+    AADN,
+    AAYG,
     PANMAC,
     OPEN_LIBRARY,
     BOOK_MOOCH,
