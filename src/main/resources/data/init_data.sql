@@ -70,6 +70,12 @@ INSERT INTO public.books (id, author, name, serial_number) VALUES (47, 'Ann M. M
 INSERT INTO public.books (id, author, name, serial_number) VALUES (48, 'Ann M. Martin', 'Karen''s Haircut (Baby-Sitters Little Sister (Paperback))', '590426702');
 INSERT INTO public.books (id, author, name, serial_number) VALUES (49, 'Mildred D. Taylor', 'Roll of Thunder, Hear My Cry', '014034893X');
 INSERT INTO public.books (id, author, name, serial_number) VALUES (50, 'John Cassidy', 'Juggling for the Complete Klutz', '932592007');
+INSERT INTO public.books (id, author, name, serial_number) VALUES (51, 'Jules Verne', 'Hai vạn dặm dưới đáy biển',  '122592007');
+INSERT INTO public.books (id, author, name, serial_number) VALUES (52, 'Robert van Gulik', 'Thi nhân và sát nhân',  '132592007');
+INSERT INTO public.books (id, author, name, serial_number) VALUES (53, 'Robert van Gulik', 'Bí mật căn phòng đỏ',  '142592007');
+INSERT INTO public.books (id, author, name, serial_number) VALUES (54, 'Carolina Zanotti', '.',  '8398622550051');
+
+
 
 --
 -- TOC entry 2884 (class 0 OID 47345)
