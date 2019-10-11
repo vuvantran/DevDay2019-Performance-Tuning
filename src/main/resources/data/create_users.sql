@@ -28,7 +28,7 @@ INSERT INTO public.users (id, create_at, email, full_name) VALUES (5, '2018-01-3
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', SELECT MAX(id) FROM users);
+SELECT pg_catalog.setval('public.users_id_seq', (SELECT MAX(id) FROM users));
 
 
 -- Completed on 2019-10-11 10:44:44
