@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class DefaultBookService implements BookService {
 	}
 
     @Override
+    @Transactional
     public List<BookDto> findBooksWithNameContain(String keyword) {
         log.info(String.format("find all books contain keyword '%s'.", keyword));
         List<BookDto> books = new LinkedList<>();
