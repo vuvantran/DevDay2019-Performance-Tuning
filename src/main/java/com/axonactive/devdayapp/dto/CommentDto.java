@@ -1,13 +1,25 @@
 package com.axonactive.devdayapp.dto;
 
+import com.axonactive.devdayapp.domain.Comment;
+
 public class CommentDto {
 	private Long id;
     private BookDetailDto bookDetail;
     private UserDto user;
     private String content;
     private CommentDto parent;
-    
+
     private Long parentId;
+
+    public static CommentDto fromEntity(Comment entity) {
+        if (entity == null) return null;
+        CommentDto dto = new CommentDto();
+        dto.id = entity.getId();
+        dto.user = UserDto.fromEntity(entity.getUser());
+        dto.content = entity.getContent();
+        dto.parent = CommentDto.fromEntity(entity.getParent());
+        return dto;
+    }
 
     public Long getId() {
         return id;

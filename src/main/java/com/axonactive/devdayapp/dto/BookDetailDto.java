@@ -1,8 +1,11 @@
 package com.axonactive.devdayapp.dto;
 
 import com.axonactive.devdayapp.domain.BookDetail;
+import com.axonactive.devdayapp.domain.Comment;
+import com.axonactive.devdayapp.domain.Rating;
 import com.axonactive.devdayapp.domain.Tag;
 import com.axonactive.devdayapp.enums.BookSource;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,18 @@ public class BookDetailDto {
                 dto.tags.add(TagDto.fromEntity(tag));
             }
         }
+        dto.ratings = new ArrayList<>();
+        if (entity.getRatings() != null) {
+            for (Rating rating: entity.getRatings()) {
+                dto.ratings.add(RatingDto.fromEntity(rating));
+            }
+        }
+        dto.comments = new ArrayList<>();
+        if (entity.getComments() != null) {
+            for (Comment comment: entity.getComments()) {
+                dto.comments.add(CommentDto.fromEntity(comment));
+            }
+        }
         return dto;
     }
 
@@ -44,6 +59,7 @@ public class BookDetailDto {
         this.id = id;
     }
 
+    @JsonIgnore
     public BookDto getBook() {
         return book;
     }
