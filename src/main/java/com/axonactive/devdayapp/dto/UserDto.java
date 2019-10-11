@@ -1,5 +1,7 @@
 package com.axonactive.devdayapp.dto;
 
+import com.axonactive.devdayapp.domain.User;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,16 @@ public class UserDto {
     private List<DeviceDto> devices;
     private List<RatingDto> ratings;
     private List<BookDto> bookInWishList;
+
+    public static UserDto fromEntity(User entity) {
+        if (entity == null) return null;
+        UserDto dto = new UserDto();
+        dto.id = entity.getId();
+        dto.fullName = entity.getFullName();
+        dto.email = entity.getEmail();
+        dto.createAt = entity.getCreateAt();
+        return dto;
+    }
 
     public Long getId() {
         return id;
