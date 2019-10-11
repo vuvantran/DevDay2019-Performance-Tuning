@@ -3,6 +3,8 @@ package com.axonactive.devdayapp.service;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.ExternalService;

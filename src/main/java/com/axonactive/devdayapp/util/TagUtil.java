@@ -8,7 +8,7 @@ public class TagUtil {
 		if(null == tag) {
 			return null;
 		}else {
-			TagDto dto = new TagDto();
+			var dto = new TagDto();
 			dto.setId(tag.getId());
 			dto.setName(tag.getName());
 			return dto;

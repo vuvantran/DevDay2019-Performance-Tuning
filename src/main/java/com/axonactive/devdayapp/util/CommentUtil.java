@@ -8,7 +8,7 @@ public class CommentUtil {
 		if(null == comment) {
 			return null;
 		}else {
-			CommentDto dto = new CommentDto();
+			var dto = new CommentDto();
 			dto.setId(comment.getId());
 			dto.setContent(comment.getContent());
 			dto.setParentId(comment.getParent().getId());

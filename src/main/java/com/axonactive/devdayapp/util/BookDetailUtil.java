@@ -18,7 +18,7 @@ public class BookDetailUtil {
 		if(null == bookDetail) {
 			return null;
 		}else {
-			BookDetailDto detailDto = new BookDetailDto();
+			var detailDto = new BookDetailDto();
 			detailDto.setId(bookDetail.getId());
 			detailDto.setDescription(bookDetail.getDescription());
 			detailDto.setCoverUrl(bookDetail.getCoverUrl());

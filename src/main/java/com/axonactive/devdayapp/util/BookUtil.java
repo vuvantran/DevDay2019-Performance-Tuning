@@ -11,7 +11,7 @@ public class BookUtil {
 		if(null == book) {
 			return null;
 		}else {
-			BookDto dto = new BookDto();
+			var dto = new BookDto();
 			dto.setAuthor(book.getName());
 			dto.setId(book.getId());
 			dto.setName(book.getName());
@@ -24,7 +24,7 @@ public class BookUtil {
 		if(null == book) {
 			return null;
 		}else {
-			BookDto dto = new BookDto();
+			var dto = new BookDto();
 			dto.setAuthor(book.getName());
 			dto.setId(book.getId());
 			dto.setName(book.getName());
