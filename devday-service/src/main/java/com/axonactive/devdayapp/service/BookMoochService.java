@@ -1,16 +1,15 @@
 package com.axonactive.devdayapp.service;
 
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
-import org.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.enums.BookSource;
 
 public class BookMoochService extends ExternalService {
