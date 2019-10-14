@@ -2,6 +2,9 @@ package com.axonactive.devdayapp.swagger.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.google.common.base.Predicates;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -16,7 +19,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/library-core/**"))
+                .paths(Predicates.or(PathSelectors.ant("/library-core/**"), PathSelectors.ant("/user/**")))
                 .build();
     }
 }
