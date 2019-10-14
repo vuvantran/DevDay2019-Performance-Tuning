@@ -1,13 +1,6 @@
 package com.axonactive.devdayapp;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.CommentDto;
-import com.axonactive.devdayapp.dto.SearchingCriteria;
-import com.axonactive.devdayapp.service.BookService;
-import com.axonactive.devdayapp.service.SearchingService;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,18 +9,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.dto.CommentDto;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
-import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.BookDetailService;
+import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.CommentService;
 import com.axonactive.devdayapp.service.SearchingService;
 
