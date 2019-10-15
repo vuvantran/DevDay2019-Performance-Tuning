@@ -153,7 +153,9 @@ CREATE TABLE public.users (
     id bigint NOT NULL,
     create_at timestamp without time zone,
     email character varying(255),
-    full_name character varying(255)
+    full_name character varying(255),
+    password character varying(255) NOT NULL,
+    username character varying(255) NOT NULL
 );
 
 
