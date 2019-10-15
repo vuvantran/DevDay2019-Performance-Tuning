@@ -40,7 +40,7 @@ public class LibraryCoreResource {
 	@Autowired
 	private BookDetailService bookDetailService;
 
-	@GetMapping
+	@GetMapping("/books")
 	public List<BookDto> getBooks() {
 		log.info("Get all books.");
 		return bookService.getAll();

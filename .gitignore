@@ -1,4 +1,7 @@
-logs/
+**/logs
 target/
-/.classpath
-/.project
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
