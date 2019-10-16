@@ -13,8 +13,8 @@ public interface BookRepository extends CrudRepository<Book, Long> {
     String SELECT_STATEMENT = "SELECT distinct(b.*) FROM Books b ";
 
     // Join part
-    String BOOK_LEFT_JOIN_DETAILS = " left join Book_Details d on b.id = d.book_id ";
-    String BOOK_LEFT_JOIN_TAGS = " left join Book_Tags t on d.id = t.book_detail_id ";
+    String BOOK_LEFT_JOIN_DETAILS = " full outer join Book_Details d on b.id = d.book_id ";
+    String BOOK_LEFT_JOIN_TAGS = " full outer join Book_Tags t on d.id = t.book_detail_id ";
     String JOINS = BOOK_LEFT_JOIN_DETAILS + BOOK_LEFT_JOIN_TAGS;
 
     // Condition part
