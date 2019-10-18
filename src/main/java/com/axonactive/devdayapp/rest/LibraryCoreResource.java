@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.axonactive.devdayapp.dto.BookDto;
@@ -21,6 +23,9 @@ import com.axonactive.devdayapp.service.BookDetailService;
 import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.CommentService;
 import com.axonactive.devdayapp.service.SearchingService;
+import com.axonactive.devdayapp.service.SingleSearchingService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/library-core/api")
@@ -33,6 +38,8 @@ public class LibraryCoreResource {
 
 	@Autowired
 	private SearchingService searchingService;
+	@Autowired
+	private SingleSearchingService singleSearchingService;
 
 	@Autowired
 	private CommentService commentService;
@@ -58,7 +65,9 @@ public class LibraryCoreResource {
 		log.info(String.format("Searching for comments of bookId=%s", 1, bookId));
 		return commentService.getCommentByBookId(bookId);
 	}
-
+	@ApiOperation(value = "V1 of the search API. Server will search on all internal & external sources",
+			consumes = "application/json",
+			produces = "application/json")
 	@PostMapping("/books/search")
 	public List<BookDto> searchBook(@RequestBody SearchingCriteria criteria) {
 		log.info(String.format("Searching for books with criteria '%s'", criteria));
@@ -77,5 +86,21 @@ public class LibraryCoreResource {
 			@PathVariable("bookDetailId") Long bookDetailId) {
 		log.info("User {} do unrate the book detail with id {}", userId, bookDetailId);
 		return bookDetailService.unrateABook(userId, bookDetailId);
+	}
+	
+	@ApiOperation(value = "V2 of the search API. Caller can choose wich data source to search",
+			consumes = "application/aavn.library.api.v2+json",
+			produces = "application/aavn.library.api.v2+json"
+			)
+	@RequestMapping(
+			  method = RequestMethod.POST, 
+			  value = "/books/search", 
+			  produces = "application/aavn.library.api.v2+json",
+			  headers="Content-Type=application/aavn.library.api.v2+json"
+			)
+	@ResponseBody
+	public List<BookDto> searchSingleBook(@RequestBody SearchingCriteria criteria) {
+		log.info(String.format("Searching for books with criteria '%s'", criteria));
+		return singleSearchingService.search(criteria);
 	}
 }

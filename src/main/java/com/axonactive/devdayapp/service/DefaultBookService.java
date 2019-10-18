@@ -4,6 +4,7 @@ import com.axonactive.devdayapp.domain.Book;
 import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.enums.BookSource;
 import com.axonactive.devdayapp.repo.BookRepository;
 import com.axonactive.devdayapp.util.BookUtil;
 import org.apache.logging.log4j.LogManager;
@@ -59,5 +60,22 @@ public class DefaultBookService implements BookService {
         }
         return books;
     }
+
+	@Override
+	public List<BookDto> findBooksWithNameAndSource(String keyword,BookSource source) {
+		log.info(String.format("find all books contain keyword '%s'.", keyword));
+        List<BookDto> books = new LinkedList<>();
+        for (Book book: bookRepo.findBooksWithNameAndSource("%".concat(keyword).concat("%"),source.ordinal())) {
+            BookDto bookDto = BookDto.fromEntity( book );
+            List<BookDetailDto> detailDtos = new LinkedList<>();
+            bookDto.setDetails(detailDtos);
+            books.add(bookDto);
+            if (book.getDetails() == null) continue;
+            for (BookDetail detail: book.getDetails()) {
+                detailDtos.add( BookDetailDto.fromEntity( detail ) );
+            }
+        }
+        return books;
+	}
 }
 

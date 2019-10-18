@@ -16,9 +16,11 @@ import com.google.common.collect.ImmutableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
+@Primary
 public class DefaultSearchingService implements SearchingService {
     private static final Logger log = LogManager.getLogger(DefaultSearchingService.class);
 
