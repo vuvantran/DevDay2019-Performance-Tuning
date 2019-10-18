@@ -1,0 +1,28 @@
+schema{
+ query:Query
+}
+
+type Query{
+  allBooks: [BookDto]
+  book(id: Long): BookDto
+}
+
+type BookDto{
+  id: Long
+  name:String
+  author:String
+  serialNumber:String
+}
+type BookDetailDto{
+  id: Long
+  description:String
+  coverUrl:String
+  serialNumber:String
+}
+type CommentDto{
+	id: Long
+	description:String
+	content: String
+	parentId: Long
+}
+
