@@ -24,7 +24,7 @@ public class GraphQLResource {
     
     @PostMapping
     public ResponseEntity<Object> getAllBooks(@RequestBody String query){
-        logger.info("Entering getAllBooks@BookController");
+        logger.info("Entering getAllBooks@GraphQLResource");
         ExecutionResult execute = graphQLService.getGraphQL().execute(query);
         return new ResponseEntity<>(execute, HttpStatus.OK);
     }
