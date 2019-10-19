@@ -6,7 +6,7 @@ import com.axonactive.devdayapp.dto.UserDto;
 import com.axonactive.devdayapp.exception.InvalidUsernamePasswordException;
 import com.axonactive.devdayapp.exception.UserAlreadyExistedException;
 import com.axonactive.devdayapp.exception.UserNotFoundException;
-import org.apache.logging.log4j.LogManager;
+import com.axonactive.devdayapp.logger.Log;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.util.DigestUtils;
 
 @Service
 public class DefaultLoginService implements LoginService {
-    private static final Logger log = LogManager.getLogger(DefaultLoginService.class);
+    private static @Log Logger log;
     
 	@Autowired
 	private UserService userService;

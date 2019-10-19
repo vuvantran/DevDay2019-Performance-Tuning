@@ -4,18 +4,18 @@ import com.axonactive.devdayapp.Constants;
 import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.domain.Rating;
 import com.axonactive.devdayapp.domain.User;
+import com.axonactive.devdayapp.logger.Log;
 import com.axonactive.devdayapp.repo.BookDetailRepository;
 import com.axonactive.devdayapp.repo.RatingRepository;
 import com.axonactive.devdayapp.repo.UserRepository;
 import java.util.Optional;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultBookDetailService implements BookDetailService {
-    private static final Logger log = LogManager.getLogger(DefaultBookDetailService.class);
+    private static @Log Logger log;
     @Autowired
     private BookDetailRepository bookDetailRepo;
 

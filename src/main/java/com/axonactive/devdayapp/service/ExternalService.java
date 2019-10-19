@@ -2,20 +2,18 @@ package com.axonactive.devdayapp.service;
 
 import java.util.List;
 import com.axonactive.devdayapp.Constants;
-import com.axonactive.devdayapp.dto.BookDto;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.logger.Log;
 
 public abstract class ExternalService implements Callable<List<BookDto>> {
-    private static final Logger log = LogManager.getLogger(ExternalService.class);
+    private static @Log Logger log;
 
     private String keyword;
 
