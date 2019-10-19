@@ -1,24 +1,17 @@
 package com.axonactive.devdayapp.service;
 
+import com.axonactive.devdayapp.Constants;
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.google.common.collect.ImmutableList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.concurrent.Future;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ExecutionException;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.service.BookService;
-import com.axonactive.devdayapp.service.ExternalService;
-import com.axonactive.devdayapp.service.PanMacService;
-import com.axonactive.devdayapp.service.OpenLibraryService;
-import com.axonactive.devdayapp.service.BookMoochService;
-import com.axonactive.devdayapp.service.ITBookStoreService;
-import com.axonactive.devdayapp.service.InternalSearchRunner;
-import com.axonactive.devdayapp.dto.SearchingCriteria;
-import com.google.common.collect.ImmutableList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
