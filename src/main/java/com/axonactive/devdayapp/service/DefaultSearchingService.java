@@ -18,7 +18,6 @@ import com.axonactive.devdayapp.service.BookMoochService;
 import com.axonactive.devdayapp.service.ITBookStoreService;
 import com.axonactive.devdayapp.service.InternalSearchRunner;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
-
 import com.google.common.collect.ImmutableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,6 +42,7 @@ public class DefaultSearchingService implements SearchingService {
     private BookService bookService;
 
     public List<BookDto> search(SearchingCriteria criteria) {
+        long startTime = System.currentTimeMillis();
         String keyword = criteria.getKeyword();
         log.info("Search for books contain keyword: " + keyword);
         List<BookDto> cachedBooks = CACHED_RESULTS.get(keyword);
@@ -69,6 +69,10 @@ public class DefaultSearchingService implements SearchingService {
             } catch(InterruptedException | ExecutionException ignored) {}
         }
         log.info("Total found {} books in our DB and external services", output.size());
+        log.info(Constants.INFO_LOG_MSG, getClass(),
+                "search", 
+                System.currentTimeMillis() - startTime,
+                String.format("keyword=%s", keyword));
         CACHED_RESULTS.put(keyword, output);
         return output;
     }

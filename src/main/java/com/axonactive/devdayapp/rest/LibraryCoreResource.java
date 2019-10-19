@@ -1,7 +1,13 @@
 package com.axonactive.devdayapp.rest;
 
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.dto.CommentDto;
+import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.service.BookDetailService;
+import com.axonactive.devdayapp.service.BookService;
+import com.axonactive.devdayapp.service.CommentService;
+import com.axonactive.devdayapp.service.SearchingService;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.CommentDto;
-import com.axonactive.devdayapp.dto.SearchingCriteria;
-import com.axonactive.devdayapp.service.BookDetailService;
-import com.axonactive.devdayapp.service.BookService;
-import com.axonactive.devdayapp.service.CommentService;
-import com.axonactive.devdayapp.service.SearchingService;
 
 @RestController
 @RequestMapping("/library-core/api")
@@ -55,7 +53,7 @@ public class LibraryCoreResource {
 
 	@GetMapping("/books/{bookId}/comments")
 	public List<CommentDto> getCommentByBookId(@PathVariable("bookId") Long bookId) {
-		log.info(String.format("Searching for comments of bookId=%s", 1, bookId));
+		log.info(String.format("Searching for comments of bookId=%s", bookId));
 		return commentService.getCommentByBookId(bookId);
 	}
 

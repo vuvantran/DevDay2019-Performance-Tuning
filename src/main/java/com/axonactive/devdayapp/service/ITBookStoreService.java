@@ -4,19 +4,14 @@ import java.util.List;
 import java.util.LinkedList;
 
 import org.json.JSONObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.enums.BookSource;
 
 public class ITBookStoreService extends ExternalService {
-    private static final Logger log = LogManager.getLogger(ITBookStoreService.class);
     private static final String BASE_URL = "https://api.itbook.store/1.0/search/";
     private static final String GET_BOOK_URL = "https://api.itbook.store/1.0/books/";
 
@@ -44,7 +39,6 @@ public class ITBookStoreService extends ExternalService {
         List<BookDto> output = new LinkedList<>();
         JSONArray books = response.getJSONArray("books");
         int len = books.length();
-        log.info("Found " + len + " books from IT Book Store.");
         for (int i = 0; i < len; ++i) {
             JSONObject bookMin = books.getJSONObject(i);
             String bookId = bookMin.getString("isbn13");
@@ -58,7 +52,6 @@ public class ITBookStoreService extends ExternalService {
             String preface = book.getString("desc");
             String coverUrl = book.getString("image");
             
-            log.info(String.format(" Book %s, name=%s, author=%s", i+1, name, author));
             BookDto bookDto = BookDto.createSingleBook()
                 .withName(name)
                 .withAuthor(author)

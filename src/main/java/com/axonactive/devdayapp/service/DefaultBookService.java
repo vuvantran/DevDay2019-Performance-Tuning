@@ -29,8 +29,12 @@ public class DefaultBookService implements BookService {
 
     @Override
 	public BookDto findById(long bookId) {
-        log.info("find book has Id = " + bookId);
+        long startTime = System.currentTimeMillis();
 		Optional<Book> result = bookRepo.findById(bookId);
+        log.info(Constants.INFO_LOG_MSG, getClass(),
+                "findById", 
+                System.currentTimeMillis() - startTime,
+                String.format("bookId=%s", bookId));
 		if(result.isPresent())
 			return BookUtil.toFullBookDto(result.get());
 		else
@@ -39,16 +43,21 @@ public class DefaultBookService implements BookService {
 
 	@Override
 	public List<BookDto> getAll() {
-        log.info("get all books");
-		return  StreamSupport.stream(bookRepo.findAll().spliterator(),false)
+        long startTime = System.currentTimeMillis();
+		List<BookDto> books = StreamSupport.stream(bookRepo.findAll().spliterator(),false)
 			.map(book -> BookUtil.toSimpleBookDto(book))
             .collect(Collectors.toList());
+        log.info(Constants.INFO_LOG_MSG, getClass(),
+                "getAll", 
+                System.currentTimeMillis() - startTime,
+                "");
+        return books;
 	}
 
     @Override
     @Transactional
     public List<BookDto> findBooksWithNameContain(String keyword) {
-        log.info(String.format("find all books contain keyword '%s'.", keyword));
+        long startTime = System.currentTimeMillis();
         List<BookDto> books = new LinkedList<>();
         for (Book book: bookRepo.findBooksWithNameContain("%".concat(keyword).concat("%"))) {
             BookDto bookDto = BookDto.fromEntity( book );
@@ -60,6 +69,10 @@ public class DefaultBookService implements BookService {
                 detailDtos.add( BookDetailDto.fromEntity( detail ) );
             }
         }
+        log.info(Constants.INFO_LOG_MSG, getClass(),
+                "findBooksWithNameContain", 
+                System.currentTimeMillis() - startTime,
+                String.format("keyword=%s", keyword));
         return books;
     }
 }
