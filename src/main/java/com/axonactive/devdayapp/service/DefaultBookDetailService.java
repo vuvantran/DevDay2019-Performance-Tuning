@@ -53,7 +53,7 @@ public class DefaultBookDetailService implements BookDetailService {
         rating.setBookDetail(book.get());
         rating.setValue(point);
         ratingRepo.save(rating);
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "rateABook", 
                 System.currentTimeMillis() - startTime,
                 String.format("userId=%s, bookDetailId=%s, point=%s", userId, bookDetailId, point));
@@ -68,7 +68,7 @@ public class DefaultBookDetailService implements BookDetailService {
             return false;
         }
         ratingRepo.delete(oldRating);
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "rateABook", 
                 System.currentTimeMillis() - startTime,
                 String.format("userId=%s, bookDetailId=%s", userId, bookDetailId));

@@ -62,7 +62,7 @@ public class DefaultSearchingService implements SearchingService {
             } catch(InterruptedException | ExecutionException ignored) {}
         }
         log.info("Total found {} books in our DB and external services", output.size());
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "search", 
                 System.currentTimeMillis() - startTime,
                 String.format("keyword=%s", keyword));

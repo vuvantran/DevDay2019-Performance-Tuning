@@ -30,7 +30,7 @@ public class DefaultBookService implements BookService {
 	public BookDto findById(long bookId) {
         long startTime = System.currentTimeMillis();
 		Optional<Book> result = bookRepo.findById(bookId);
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "findById", 
                 System.currentTimeMillis() - startTime,
                 String.format("bookId=%s", bookId));
@@ -46,7 +46,7 @@ public class DefaultBookService implements BookService {
 		List<BookDto> books = StreamSupport.stream(bookRepo.findAll().spliterator(),false)
 			.map(book -> BookUtil.toSimpleBookDto(book))
             .collect(Collectors.toList());
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "getAll", 
                 System.currentTimeMillis() - startTime,
                 "");
@@ -68,7 +68,7 @@ public class DefaultBookService implements BookService {
                 detailDtos.add( BookDetailDto.fromEntity( detail ) );
             }
         }
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "findBooksWithNameContain", 
                 System.currentTimeMillis() - startTime,
                 String.format("keyword=%s", keyword));

@@ -24,19 +24,19 @@ public class DefaultLoginService implements LoginService {
         long startTime = System.currentTimeMillis();
 		if (userService.findByUsername(loginUser.getUsername()) != null)
 		{
-            log.error(Constants.ERROR_LOG_MSG, getClass(),
+            log.error(Constants.ERROR_LOG_MSG, getClass().getName(),
                 "registration", 
                 String.format("User already existed: userName=%s, password=%s", loginUser.getUsername(), loginUser.getPassword()));
 			throw new UserAlreadyExistedException("Error when creating new user. User already existed.");
 		}
 		Boolean save = userService.save(LoginUser.toUserDTO(loginUser));
 		if (!save)	{
-            log.error(Constants.ERROR_LOG_MSG, getClass(),
+            log.error(Constants.ERROR_LOG_MSG, getClass().getName(),
                 "registration", 
                 String.format("Cannot save user to database: userName=%s, password=%s", loginUser.getUsername(), loginUser.getPassword()));
 			throw new InternalError("Error when creating new user. Cannot save user to database.");
 		}
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "registration", 
                 System.currentTimeMillis() - startTime,
                 String.format("userName=%s, password=%s", loginUser.getUsername(), loginUser.getPassword()));
@@ -48,13 +48,13 @@ public class DefaultLoginService implements LoginService {
 		UserDto user = userService.findByUsername(username);
 		if (user == null)
 		{
-            log.error(Constants.ERROR_LOG_MSG, getClass(),
+            log.error(Constants.ERROR_LOG_MSG, getClass().getName(),
                 "login", 
                 String.format("User cannot be found: userName=%s, password=%s", username, password));
 			throw new UserNotFoundException("User cannot be found. Username: " + username);
 		}
 		if (!isValidPassword(password, user.getPassword())) {
-            log.error(Constants.ERROR_LOG_MSG, getClass(),
+            log.error(Constants.ERROR_LOG_MSG, getClass().getName(),
                 "login", 
                 String.format("User cannot be found: userName=%s, password=%s", username, password));
 			throw new InvalidUsernamePasswordException("User cannot be found. Username: " + username);
@@ -63,7 +63,7 @@ public class DefaultLoginService implements LoginService {
 		LoginUser loginUser = new LoginUser();
 		loginUser.setUsername(username);
 		loginUser.setPassword(password);
-        log.info(Constants.INFO_LOG_MSG, getClass(),
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "login", 
                 System.currentTimeMillis() - startTime,
                 String.format("userName=%s, password=%s", username, password));
