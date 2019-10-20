@@ -30,7 +30,7 @@ public class DefaultCommentService implements CommentService {
 				.flatMap(bookDetail -> Optional.ofNullable(BookDetailUtil.toBookDetailDto(bookDetail).getComments()).orElse( Collections.emptyList()).stream())
 				.collect(Collectors.toList());
 		
-		log.info(Constants.INFO_LOG_MSG, getClass(),
+		log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "getCommentByBookId", 
                 System.currentTimeMillis() - startTime,
                 String.format("bookId=%s", bookId));
