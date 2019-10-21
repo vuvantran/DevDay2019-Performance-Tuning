@@ -48,8 +48,8 @@ public class DefaultUserService implements UserService {
 		
 		Assert.notNull(username, "Username cannot be empty!");
 		User user = userRepository.findByUsername(username);
-		
-        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
+
+		log.info(Constants.INFO_LOG_MSG, getClass().getName(),
                 "findByUsername", 
                 System.currentTimeMillis() - startTime,
                 String.format("userName=%s", username));
