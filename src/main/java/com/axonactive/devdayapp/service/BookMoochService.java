@@ -1,20 +1,14 @@
 package com.axonactive.devdayapp.service;
 
-import java.util.List;
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.enums.BookSource;
 import java.util.LinkedList;
-
-import org.json.JSONObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.BookDetailDto;
-import com.axonactive.devdayapp.enums.BookSource;
+import org.json.JSONObject;
 
 public class BookMoochService extends ExternalService {
-    private static final Logger log = LogManager.getLogger(BookMoochService.class);
     private static final String BASE_URL = "http://api.bookmooch.com/api/search?db=bm&o=json&txt=";
 
     @Override
@@ -28,7 +22,6 @@ public class BookMoochService extends ExternalService {
         List<BookDto> output = new LinkedList<>();
 
         int len = response.length();
-        log.info("Found " + len + " books from BookMooch.");
         for (int i = 0; i < len; ++i) {
             JSONObject book = response.getJSONObject(i);
             String author = "";
@@ -48,7 +41,6 @@ public class BookMoochService extends ExternalService {
             coverUrl = coverUrl.replaceAll("\\\\\\/", "/");
             String name = book.getString("Title");
 
-            log.info(String.format(" Book %s, name=%s, author=%s", i+1, name, author));
             BookDto bookDto = BookDto.createSingleBook()
                 .withName(name)
                 .withAuthor(author)

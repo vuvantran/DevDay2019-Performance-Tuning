@@ -4,18 +4,26 @@ import java.util.Date;
 import java.util.List;
 
 import com.axonactive.devdayapp.domain.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class UserDto {
 
 	private Long id;
+	@JsonIgnore
 	private String username;
+	@JsonIgnore
 	private String password;
     private String fullName;
     private String email;
+    @JsonIgnore
     private Date createAt;
+    @JsonIgnore
     private List<CommentDto> comments;
+    
     private List<DeviceDto> devices;
+    @JsonIgnore
     private List<RatingDto> ratings;
+    @JsonIgnore
     private List<BookDto> bookInWishList;
 
     public static UserDto fromEntity(User entity) {
