@@ -1,20 +1,26 @@
 package com.axonactive.devdayapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 import com.axonactive.devdayapp.dto.LoginUser;
-import com.axonactive.devdayapp.dto.UserDto;
 import com.axonactive.devdayapp.exception.InvalidUsernamePasswordException;
 import com.axonactive.devdayapp.exception.UserAlreadyExistedException;
-import com.axonactive.devdayapp.exception.UserNotFoundException;
 
 @Service
 public class DefaultLoginService implements LoginService {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserDetailsService userDetailsService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Override
 	public void registration(LoginUser loginUser) {
@@ -31,24 +37,22 @@ public class DefaultLoginService implements LoginService {
 
 	@Override
 	public LoginUser login(String username, String password) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+				userDetails, password, userDetails.getAuthorities());
+
+	    authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+
+	    if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+
+	    	SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+	        
+	        LoginUser loginUser = new LoginUser();
+	        loginUser.setUsername(username);
+	        loginUser.setPassword(password);
+	        return loginUser;
+	    }
+	    throw new InvalidUsernamePasswordException("User cannot be found. Username: " + username);
 		
-		UserDto user = userService.findByUsername(username);
-		if (user == null)
-		{
-			throw new UserNotFoundException("User cannot be found. Username: " + username);
-		}
-		if (!isValidPassword(password, user.getPassword())) {
-			throw new InvalidUsernamePasswordException("User cannot be found. Username: " + username);
-		}
-
-		LoginUser loginUser = new LoginUser();
-		loginUser.setUsername(username);
-		loginUser.setPassword(password);
-		return loginUser;
 	}
-
-	private boolean isValidPassword(String inputPassword, String dbPassword) {
-		return DigestUtils.md5DigestAsHex(inputPassword.getBytes()).equals(dbPassword);
-	}
-
 }

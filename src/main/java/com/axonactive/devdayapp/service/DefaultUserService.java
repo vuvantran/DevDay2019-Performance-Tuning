@@ -1,9 +1,9 @@
 package com.axonactive.devdayapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.DigestUtils;
 
 import com.axonactive.devdayapp.domain.User;
 import com.axonactive.devdayapp.dto.UserDto;
@@ -14,6 +14,8 @@ public class DefaultUserService implements UserService {
 
 	@Autowired
     private UserRepository userRepository;
+	@Autowired
+    private PasswordEncoder md5PasswordEncoder;
 
 	@Override
 	public Boolean save(UserDto userDto) {
@@ -21,7 +23,7 @@ public class DefaultUserService implements UserService {
 		Assert.notNull(userDto.getUsername(), "Username cannot be empty!");
 		Assert.notNull(userDto.getPassword(), "Password cannot be empty!");
 		
-		userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
+		userDto.setPassword(md5PasswordEncoder.encode(userDto.getPassword()));
 		return userRepository.save(UserDto.toEntity(userDto)) != null;
 	}
 

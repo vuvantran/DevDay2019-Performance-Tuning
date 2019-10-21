@@ -1,4 +1,4 @@
-package com.axonactive.devdayapp.swagger.config;
+package com.axonactive.devdayapp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
