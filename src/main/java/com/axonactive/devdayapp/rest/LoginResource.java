@@ -1,6 +1,5 @@
 package com.axonactive.devdayapp.rest;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,13 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.axonactive.devdayapp.dto.LoginUser;
+import com.axonactive.devdayapp.logger.Log;
 import com.axonactive.devdayapp.service.LoginService;
 
 @RestController
 @RequestMapping("/user")
 public class LoginResource {
 	
-	private static final Logger log = LogManager.getLogger(LoginResource.class);
+	private static @Log Logger log;
 
 	private static final String ANONYMOUS_USER = "anonymousUser";
 	

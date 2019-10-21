@@ -20,10 +20,10 @@ public class DefaultUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDto userDto = userService.findByUsername(username);
 		
-		if (userDto == null) {
-			throw new UsernameNotFoundException(username);
+		if (userDto != null) {
+			return new org.springframework.security.core.userdetails.User(userDto.getUsername(), userDto.getPassword(), new ArrayList<>());
 		}
-		return new org.springframework.security.core.userdetails.User(userDto.getUsername(), userDto.getPassword(), new ArrayList<>());
+		return null;
 	}
 
 }

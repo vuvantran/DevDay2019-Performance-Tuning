@@ -1,18 +1,19 @@
 package com.axonactive.devdayapp.service;
 
 import java.util.List;
+import com.axonactive.devdayapp.Constants;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
-import org.apache.logging.log4j.LogManager;
+
 import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.logger.Log;
 
 public abstract class ExternalService implements Callable<List<BookDto>> {
-    private static final Logger log = LogManager.getLogger(ExternalService.class);
+    private static @Log Logger log;
 
     private String keyword;
 
@@ -28,10 +29,11 @@ public abstract class ExternalService implements Callable<List<BookDto>> {
             log.info("url: " + url);
             RestTemplate restTemplate = new RestTemplate();
             String rawResponse = restTemplate.getForObject(url, String.class);
-            //log.info("raw response: " + rawResponse);
             return extractBooks(rawResponse);
         } catch(Exception e) {
-            log.error("Error occurred while connecting to " + getServiceName() + ": " + e);
+            log.error(Constants.ERROR_LOG_MSG, getServiceName(),
+                "search", 
+                String.format("keyword=%s, error=%s", keyword, e));
         }
         return Collections.emptyList();
     }

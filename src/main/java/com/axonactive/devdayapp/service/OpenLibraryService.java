@@ -6,15 +6,11 @@ import java.util.List;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.enums.BookSource;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class OpenLibraryService extends ExternalService {
-    private static final Logger log = LogManager.getLogger(OpenLibraryService.class);
-
     private static final String BASE_URL = "http://openlibrary.org/search.json?title=";
     private static final String COVER_URL = "https://covers.openlibrary.org/w/id/{cid}-L.jpg";
 
@@ -42,7 +38,6 @@ public class OpenLibraryService extends ExternalService {
         List<BookDto> books = new LinkedList<>();
         JSONArray docs = response.getJSONArray("docs");
         int len = docs.length();
-        log.info("Found " + len + " books from OpenLibrary.");
         for (int i = 0; i < len; ++i) {
             JSONObject doc = docs.getJSONObject(i);
             String coverId = "";
@@ -83,7 +78,6 @@ public class OpenLibraryService extends ExternalService {
                 }
             }
 
-            log.info(String.format(" Book %s, name=%s, author=%s", i+1, name, author));
             BookDto book = BookDto.createSingleBook()
                 .withName(name)
                 .withAuthor(author.toString())

@@ -1,33 +1,25 @@
 package com.axonactive.devdayapp.service;
 
+import com.axonactive.devdayapp.Constants;
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.logger.Log;
+import com.google.common.collect.ImmutableList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.concurrent.Future;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ExecutionException;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.service.BookService;
-import com.axonactive.devdayapp.service.ExternalService;
-import com.axonactive.devdayapp.service.PanMacService;
-import com.axonactive.devdayapp.service.OpenLibraryService;
-import com.axonactive.devdayapp.service.BookMoochService;
-import com.axonactive.devdayapp.service.ITBookStoreService;
-import com.axonactive.devdayapp.service.InternalSearchRunner;
-import com.axonactive.devdayapp.dto.SearchingCriteria;
-
-import com.google.common.collect.ImmutableList;
-import org.apache.logging.log4j.LogManager;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DefaultSearchingService implements SearchingService {
-    private static final Logger log = LogManager.getLogger(DefaultSearchingService.class);
+    private static @Log Logger log;
 
     private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
     private static final ImmutableList<ExternalService> EXTERNAL_SERVICE = ImmutableList.of(
@@ -43,6 +35,7 @@ public class DefaultSearchingService implements SearchingService {
     private BookService bookService;
 
     public List<BookDto> search(SearchingCriteria criteria) {
+        long startTime = System.currentTimeMillis();
         String keyword = criteria.getKeyword();
         log.info("Search for books contain keyword: " + keyword);
         List<BookDto> cachedBooks = CACHED_RESULTS.get(keyword);
@@ -69,6 +62,10 @@ public class DefaultSearchingService implements SearchingService {
             } catch(InterruptedException | ExecutionException ignored) {}
         }
         log.info("Total found {} books in our DB and external services", output.size());
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
+                "search", 
+                System.currentTimeMillis() - startTime,
+                String.format("keyword=%s", keyword));
         CACHED_RESULTS.put(keyword, output);
         return output;
     }
