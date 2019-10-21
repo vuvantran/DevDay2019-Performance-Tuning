@@ -12,7 +12,7 @@ SET client_encoding = 'UTF8';
 CREATE TABLE public.book_comments (
     id bigint NOT NULL,
     content character varying(500),
-    parent bytea,
+    parent_id bigint,
     book_detail_id bigint NOT NULL,
     user_id bigint
 );

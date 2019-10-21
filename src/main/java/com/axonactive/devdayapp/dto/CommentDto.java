@@ -1,12 +1,14 @@
 package com.axonactive.devdayapp.dto;
 
 import com.axonactive.devdayapp.domain.Comment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class CommentDto {
 	private Long id;
     private BookDetailDto bookDetail;
     private UserDto user;
     private String content;
+    @JsonIgnore 
     private CommentDto parent;
 
     private Long parentId;
