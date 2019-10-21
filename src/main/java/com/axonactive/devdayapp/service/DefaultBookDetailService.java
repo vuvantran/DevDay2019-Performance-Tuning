@@ -1,20 +1,21 @@
 package com.axonactive.devdayapp.service;
 
-import java.util.Optional;
-
-import com.axonactive.devdayapp.repo.BookDetailRepository;
-import com.axonactive.devdayapp.repo.UserRepository;
-import com.axonactive.devdayapp.repo.RatingRepository;
-import com.axonactive.devdayapp.dto.UserDto;
+import com.axonactive.devdayapp.Constants;
 import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.domain.Rating;
 import com.axonactive.devdayapp.domain.User;
+import com.axonactive.devdayapp.repo.BookDetailRepository;
+import com.axonactive.devdayapp.repo.RatingRepository;
+import com.axonactive.devdayapp.repo.UserRepository;
+import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultBookDetailService implements BookDetailService {
-
+    private static final Logger log = LogManager.getLogger(DefaultBookDetailService.class);
     @Autowired
     private BookDetailRepository bookDetailRepo;
 
@@ -26,6 +27,7 @@ public class DefaultBookDetailService implements BookDetailService {
 
     @Override
     public boolean rateABook(Long userId, Long bookDetailId, Integer point) {
+        long startTime = System.currentTimeMillis();
         if (point == null || userId == null || bookDetailId == null) {
             return false;
         }
@@ -51,16 +53,25 @@ public class DefaultBookDetailService implements BookDetailService {
         rating.setBookDetail(book.get());
         rating.setValue(point);
         ratingRepo.save(rating);
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
+                "rateABook", 
+                System.currentTimeMillis() - startTime,
+                String.format("userId=%s, bookDetailId=%s, point=%s", userId, bookDetailId, point));
         return true;
     }
 
     @Override
     public boolean unrateABook(Long userId, Long bookDetailId) {
+        long startTime = System.currentTimeMillis();
         Rating oldRating = ratingRepo.findRatingByUserIdAndBookDetailId(userId, bookDetailId);
         if (oldRating == null) {
             return false;
         }
         ratingRepo.delete(oldRating);
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
+                "rateABook", 
+                System.currentTimeMillis() - startTime,
+                String.format("userId=%s, bookDetailId=%s", userId, bookDetailId));
         return true;
     }
 }

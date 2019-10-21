@@ -1,18 +1,11 @@
 package com.axonactive.devdayapp.service;
 
+import com.axonactive.devdayapp.Constants;
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.google.common.collect.ImmutableList;
 import java.util.LinkedList;
 import java.util.List;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.service.BookService;
-import com.axonactive.devdayapp.service.ExternalService;
-import com.axonactive.devdayapp.service.PanMacService;
-import com.axonactive.devdayapp.service.OpenLibraryService;
-import com.axonactive.devdayapp.service.BookMoochService;
-import com.axonactive.devdayapp.service.ITBookStoreService;
-import com.axonactive.devdayapp.dto.SearchingCriteria;
-
-import com.google.common.collect.ImmutableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +28,7 @@ public class DefaultSearchingService implements SearchingService {
     private BookService bookService;
 
     public List<BookDto> search(SearchingCriteria criteria) {
+        long startTime = System.currentTimeMillis();
         String keyword = criteria.getKeyword();
         log.info("Search for books contain keyword: " + keyword);
         long startPot = System.currentTimeMillis();
@@ -52,6 +46,10 @@ public class DefaultSearchingService implements SearchingService {
             output.addAll(exBooks);
         }
         log.info("Total found {} books in our DB and external services", output.size());
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
+                "search", 
+                System.currentTimeMillis() - startTime,
+                String.format("keyword=%s", keyword));
         return output;
     }
 
