@@ -76,4 +76,33 @@ public class LibraryCoreResource {
 		log.info("User {} do unrate the book detail with id {}", userId, bookDetailId);
 		return bookDetailService.unrateABook(userId, bookDetailId);
 	}
+
+	@PostMapping("/book-details/{bookDetailId}/comment")
+	public CommentDto addComment(@RequestHeader(value = "Authorization") Long userId,
+			@PathVariable("bookDetailId") Long bookDetailId, @RequestBody String comment) {
+		log.info("User {} comments {} for the book detail with id {}", userId, comment, bookDetailId);
+		return bookDetailService.addComment(userId, bookDetailId, null, comment);
+	}
+
+	@PostMapping("/book-details/{bookDetailId}/{parentCommentId}/comment")
+	public CommentDto addComment(@RequestHeader(value = "Authorization") Long userId,
+			@PathVariable("bookDetailId") Long bookDetailId, @PathVariable("parentCommentId") Long parentCommentId,
+			@RequestBody String comment) {
+		log.info("User {} comments {} for the book detail with id {} and parent_comment_id {}", userId, comment, bookDetailId, parentCommentId);
+		return bookDetailService.addComment(userId, bookDetailId, parentCommentId, comment);
+	}
+
+	@PostMapping("/book-details/comment/{commentId}")
+	public CommentDto editComment(@RequestHeader(value = "Authorization") Long userId,
+			@PathVariable("commentId") Long commentId, @RequestBody String comment) {
+		log.info("User {} comments {} for the comment_id {}", userId, comment, commentId);
+		return bookDetailService.editComment(commentId, comment);
+	}
+
+	@DeleteMapping("/book-details/comment/{commentId}")
+	public boolean uncommentABook(@RequestHeader(value = "Authorization") Long userId,
+			@PathVariable("commentId") Long commentId) {
+		log.info("User {} removes comment the book detail with comment_id {}", userId, commentId);
+		return bookDetailService.removeComment(commentId);
+	}
 }
