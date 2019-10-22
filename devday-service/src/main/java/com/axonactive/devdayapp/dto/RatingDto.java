@@ -1,10 +1,21 @@
 package com.axonactive.devdayapp.dto;
 
+import com.axonactive.devdayapp.domain.Rating;
+
 public class RatingDto {
 	private Long id;
     private BookDetailDto bookDetail;
     private UserDto user;
     private Integer value;
+
+    public static RatingDto fromEntity(Rating entity) {
+        if (entity == null) return null;
+        RatingDto dto = new RatingDto();
+        dto.id = entity.getId();
+        dto.value = entity.getValue();
+        dto.user = UserDto.fromEntity(entity.getUser());
+        return dto;
+    }
 
     public Long getId() {
         return id;

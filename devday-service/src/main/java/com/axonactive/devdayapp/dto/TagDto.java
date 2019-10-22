@@ -1,6 +1,7 @@
 package com.axonactive.devdayapp.dto;
 
 import com.axonactive.devdayapp.domain.Tag;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class TagDto {
 	private Long id;
@@ -8,6 +9,7 @@ public class TagDto {
     private String name;
 
     public static TagDto fromEntity(Tag entity) {
+        if (entity == null) return null;
         TagDto dto = new TagDto();
         dto.id = entity.getId();
         dto.name = entity.getName();
@@ -22,6 +24,7 @@ public class TagDto {
         this.id = id;
     }
 
+    @JsonIgnore
     public BookDetailDto getBookDetail() {
         return bookDetail;
     }

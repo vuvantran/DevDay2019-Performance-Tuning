@@ -3,9 +3,13 @@ package com.axonactive.devdayapp.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.axonactive.devdayapp.domain.User;
+
 public class UserDto {
 
 	private Long id;
+	private String username;
+	private String password;
     private String fullName;
     private String email;
     private Date createAt;
@@ -14,6 +18,31 @@ public class UserDto {
     private List<RatingDto> ratings;
     private List<BookDto> bookInWishList;
 
+    public static UserDto fromEntity(User entity) {
+        if (entity == null) return null;
+        UserDto dto = new UserDto();
+        dto.id = entity.getId();
+        dto.username = entity.getUsername();
+        dto.password = entity.getPassword();
+        dto.fullName = entity.getFullName();
+        dto.email = entity.getEmail();
+        dto.createAt = entity.getCreateAt();
+        return dto;
+    }
+
+    
+    public static User toEntity(UserDto userDto) {
+    	if (userDto == null) return null;
+    	User entityUser = new User();
+    	entityUser.setId(userDto.getId());
+    	entityUser.setUsername(userDto.getUsername());
+    	entityUser.setPassword(userDto.getPassword());
+    	entityUser.setFullName(userDto.getFullName());
+    	entityUser.setEmail(userDto.getEmail());
+    	entityUser.setCreateAt(userDto.getCreateAt());
+    	return entityUser;
+    }
+
     public Long getId() {
         return id;
     }
@@ -21,8 +50,24 @@ public class UserDto {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    public String getUsername() {
+		return username;
+	}
 
-    public String getFullName() {
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFullName() {
         return fullName;
     }
 

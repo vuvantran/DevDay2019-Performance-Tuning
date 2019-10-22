@@ -11,4 +11,3 @@ public class EntryPoint {
 		SpringApplication.run(EntryPoint.class, args);
 	}
 }
-
