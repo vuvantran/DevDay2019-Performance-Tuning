@@ -6,13 +6,32 @@ type Query{
   allBooks: [BookDto]
   book(id: Long): BookDto
 }
-
-
+type UserDto{
+	email: String
+	fullName: String
+}
+type CommentDto{
+	id: Long
+	user: UserDto
+	content: String
+	parentId: Long
+}
+type TagDto{
+	id: Long
+	name: String
+}
+type RatingDto{
+	value: Int
+	user: UserDto
+}
 type BookDetailDto{
   id: Long
   description:String
   coverUrl:String
-  
+  comments: [CommentDto]
+  ratings: [RatingDto]
+  tags: [TagDto]
+  source: BookSource
 }
 
 type BookDto{
@@ -20,5 +39,16 @@ type BookDto{
   name:String
   author:String
   serialNumber:String
-  details: [BookDetailDto!]
+  details: [BookDetailDto]
+}
+enum BookSource {
+	AAHCM,
+	AACT,
+	AADN,
+	AAYG,
+	PANMAC,
+	OPEN_LIBRARY,
+	BOOK_MOOCH,
+	IT_BOOK_STORE,
+	UNKNOWN
 }
