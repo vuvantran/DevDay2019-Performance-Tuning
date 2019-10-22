@@ -11,8 +11,10 @@ module bootstrap.jmod {
 	requires spring.beans;
 	requires spring.plugin.core;
 	requires com.google.common;
+	requires spring.security.web;
 	requires spring.security.core;
 	requires spring.security.config;
 	requires spring.core;
 	requires springfox.assembly;
+	requires static javax.servlet.api;
 }
