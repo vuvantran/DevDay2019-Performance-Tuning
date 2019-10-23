@@ -37,7 +37,7 @@ public class LoginResource {
 
 	@GetMapping("/login")
 	public LoginUser login(@RequestParam String username, @RequestParam String password) {
-		log.info("POST request to login. Username: {}", username);
+		log.info("GET request to login. Username: {}", username);
 		
 		try {
 			return loginService.login(username, password);
