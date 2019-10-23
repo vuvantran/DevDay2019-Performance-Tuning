@@ -20,8 +20,8 @@ public class Comment implements Serializable {
 
     @Column (length = 500)
     private String content;
-
-    @Column
+    @ManyToOne
+    @JoinColumn (name="parent_id" , nullable=true)
     private Comment parent;
 
     public Long getId() {
