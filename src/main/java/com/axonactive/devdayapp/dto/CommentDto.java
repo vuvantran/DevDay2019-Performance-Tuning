@@ -10,8 +10,18 @@ public class CommentDto {
     private String content;
     @JsonIgnore 
     private CommentDto parent;
+    private long bookDetailId;
 
     private Long parentId;
+
+    public CommentDto() {
+    }
+
+    public CommentDto(Long id, String content, long bookDetailId) {
+        this.id = id;
+        this.content = content;
+        this.bookDetailId = bookDetailId;
+    }
 
     public static CommentDto fromEntity(Comment entity) {
         if (entity == null) return null;
@@ -70,5 +80,13 @@ public class CommentDto {
 	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
+
+    public long getBookDetailId() {
+        return bookDetailId;
+    }
+
+    public void setBookDetailId(long bookDetailId) {
+        this.bookDetailId = bookDetailId;
+    }
 }
 

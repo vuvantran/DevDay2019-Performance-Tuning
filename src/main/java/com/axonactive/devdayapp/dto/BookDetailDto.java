@@ -19,6 +19,17 @@ public class BookDetailDto {
     private List<RatingDto> ratings;
     private List<TagDto> tags;
     private String coverUrl;
+    private long bookId;
+
+    public BookDetailDto() {}
+    
+    public BookDetailDto(Long id, BookSource source, String description, String coverUrl, long bookId) {
+        this.id = id;
+        this.source = source;
+        this.description = description;
+        this.coverUrl = coverUrl;
+        this.bookId = bookId;
+    }
 
     /**
      * This function just pull out basic information of the entity only
@@ -114,5 +125,13 @@ public class BookDetailDto {
 
     public void setTags(List<TagDto> tags) {
         this.tags = tags;
+    }
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
     }
 }
