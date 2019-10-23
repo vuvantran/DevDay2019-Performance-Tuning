@@ -26,7 +26,7 @@ public class LoginResource {
 
 	@PostMapping("/registration")
 	public void registration(@RequestBody LoginUser loginUser) {
-		log.info("POST request to register user. Username: ", loginUser.getUsername());
+		log.info("POST request to register user. Username: {}", loginUser.getUsername());
 		
 		try {
 			loginService.registration(loginUser);
@@ -37,7 +37,7 @@ public class LoginResource {
 
 	@GetMapping("/login")
 	public LoginUser login(@RequestParam String username, @RequestParam String password) {
-		log.info("POST request to login. Username: ", username);
+		log.info("POST request to login. Username: {}", username);
 		
 		try {
 			return loginService.login(username, password);
