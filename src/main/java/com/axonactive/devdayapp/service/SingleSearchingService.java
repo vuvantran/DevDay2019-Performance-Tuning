@@ -10,16 +10,12 @@ import org.springframework.stereotype.Component;
 
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.enums.BookSource;
 import com.google.common.collect.ImmutableList;
 @Component
 public class SingleSearchingService implements SearchingService {
 	private static final Logger log = LogManager.getLogger(SingleSearchingService.class);
-	private static final ImmutableList<ExternalService> EXTERNAL_SERVICE = ImmutableList.of(
-            new PanMacService(),
-            new OpenLibraryService(),
-            new BookMoochService(),
-            new ITBookStoreService()
-    );
+	
 	@Autowired
     private BookService bookService;
 	@Override
@@ -28,34 +24,34 @@ public class SingleSearchingService implements SearchingService {
 		List<BookDto> output = new LinkedList<>();
 		String keyword = criteria.getKeyword();
         //log.info("Search for books contain keyword: " + keyword);
-        
-        switch (criteria.getBookSource()) {
-		case AAHCM:
-		case AADN:
-		case AACT:
-		case AAYG:
+		
+		if (criteria.getBookSource().equals(BookSource.AAHCM)||criteria.getBookSource().equals(BookSource.AADN)
+        		|| criteria.getBookSource().equals(BookSource.AACT)||criteria.getBookSource().equals(BookSource.AAYG)) {
+		
 			
 			output.addAll(bookService.findBooksWithNameAndSource(keyword,criteria.getBookSource()));
 			
-			break;
-		case PANMAC:
-		case BOOK_MOOCH:
-		case IT_BOOK_STORE:
-		case OPEN_LIBRARY:
-			for (ExternalService exService: EXTERNAL_SERVICE) {
-				 
-				if(exService.getClass().getCanonicalName().toUpperCase().indexOf(criteria.getBookSource().name().toUpperCase()) >= 0) {
-					List<BookDto> exBooks = exService.search(keyword);
-		            
-		            log.info("Found {} books in {} service", exBooks.size(), exService.getClass().getCanonicalName());
-		            output.addAll(exBooks);
-				}
-	        }
-            break;
-		default:
-			break;
-		}
-
+        } else {
+        	ExternalService exService = null;
+        	if(criteria.getBookSource().equals(BookSource.PANMAC)){
+        		exService = new PanMacService();
+        	}else if(criteria.getBookSource().equals(BookSource.BOOK_MOOCH)) {
+        		exService = new BookMoochService();
+        	}else if(criteria.getBookSource().equals(BookSource.IT_BOOK_STORE)) {
+        		exService = new ITBookStoreService();
+        	}else if(criteria.getBookSource().equals(BookSource.OPEN_LIBRARY)) {
+        		exService = new OpenLibraryService();
+        	}else {
+        		log.info("Cannot search from {} source", criteria.getBookSource().getClass().getCanonicalName());
+        	}
+        	if(null != exService) {
+	        	List<BookDto> exBooks = exService.search(keyword);
+	            
+	            log.info("Found {} books in {} service", exBooks.size(), exService.getClass().getCanonicalName());
+	            output.addAll(exBooks);
+        	}
+        }
+        
         log.info("Total found {} books ", output.size());
         return output;
 	}

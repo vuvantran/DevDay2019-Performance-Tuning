@@ -66,7 +66,6 @@ public class LibraryCoreResource {
 		return commentService.getCommentByBookId(bookId);
 	}
 	@ApiOperation(value = "V1 of the search API. Server will search on all internal & external sources",
-			consumes = "application/json",
 			produces = "application/json")
 	@PostMapping("/books/search")
 	public List<BookDto> searchBook(@RequestBody SearchingCriteria criteria) {

@@ -16,15 +16,18 @@ import java.util.stream.StreamSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@Primary
 public class DefaultBookService implements BookService {
     private static final Logger log = LogManager.getLogger(DefaultBookService.class);
     
     @Autowired
     private BookRepository bookRepo;
+    
 
     @Override
 	public BookDto findById(long bookId) {
@@ -76,7 +79,7 @@ public class DefaultBookService implements BookService {
 
 	@Override
 	public List<BookDto> findBooksWithNameAndSource(String keyword,BookSource source) {
-		log.info(String.format("find all books contain keyword '%s'.", keyword));
+		log.info(String.format("find all books contain keyword '%s' from source %d", keyword,source.ordinal()));
         List<BookDto> books = new LinkedList<>();
         for (Book book: bookRepo.findBooksWithNameAndSource("%".concat(keyword).concat("%"),source.ordinal())) {
             BookDto bookDto = BookDto.fromEntity( book );
@@ -85,7 +88,9 @@ public class DefaultBookService implements BookService {
             books.add(bookDto);
             if (book.getDetails() == null) continue;
             for (BookDetail detail: book.getDetails()) {
-                detailDtos.add( BookDetailDto.fromEntity( detail ) );
+            	if(source.equals(detail.getSource())) {
+            		detailDtos.add( BookDetailDto.fromEntity( detail ) );
+            	}
             }
         }
         return books;
