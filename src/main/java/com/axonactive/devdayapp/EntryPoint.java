@@ -30,8 +30,10 @@ import com.axonactive.devdayapp.service.BookService;
 import com.axonactive.devdayapp.service.BookDetailService;
 import com.axonactive.devdayapp.service.CommentService;
 import com.axonactive.devdayapp.service.SearchingService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @EnableAutoConfiguration
 @ComponentScan
