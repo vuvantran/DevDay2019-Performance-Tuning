@@ -1,15 +1,10 @@
 package com.axonactive.devdayapp.rest;
 
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.CommentDto;
-import com.axonactive.devdayapp.dto.SearchingCriteria;
-import com.axonactive.devdayapp.service.BookDetailService;
-import com.axonactive.devdayapp.service.BookService;
-import com.axonactive.devdayapp.service.CommentService;
-import com.axonactive.devdayapp.service.SearchingService;
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.dto.CommentDto;
+import com.axonactive.devdayapp.dto.RequestComment;
+import com.axonactive.devdayapp.dto.SearchingCriteria;
+import com.axonactive.devdayapp.service.BookDetailService;
+import com.axonactive.devdayapp.service.BookService;
+import com.axonactive.devdayapp.service.CommentService;
+import com.axonactive.devdayapp.service.SearchingService;
 
 @RestController
 @RequestMapping("/library-core/api")
@@ -79,18 +83,11 @@ public class LibraryCoreResource {
 
 	@PostMapping("/book-details/{bookDetailId}/comment")
 	public CommentDto addComment(@RequestHeader(value = "Authorization") Long userId,
-			@PathVariable("bookDetailId") Long bookDetailId, @RequestBody String comment) {
+			@PathVariable("bookDetailId") Long bookDetailId, @RequestBody RequestComment comment) throws ParseException {
 		log.info("User {} comments {} for the book detail with id {}", userId, comment, bookDetailId);
-		return bookDetailService.addComment(userId, bookDetailId, null, comment);
+		return bookDetailService.addComment(userId, bookDetailId, comment.getParentId(), comment.getComment());
 	}
 
-	@PostMapping("/book-details/{bookDetailId}/{parentCommentId}/comment")
-	public CommentDto addComment(@RequestHeader(value = "Authorization") Long userId,
-			@PathVariable("bookDetailId") Long bookDetailId, @PathVariable("parentCommentId") Long parentCommentId,
-			@RequestBody String comment) {
-		log.info("User {} comments {} for the book detail with id {} and parent_comment_id {}", userId, comment, bookDetailId, parentCommentId);
-		return bookDetailService.addComment(userId, bookDetailId, parentCommentId, comment);
-	}
 
 	@PostMapping("/book-details/comment/{commentId}")
 	public CommentDto editComment(@RequestHeader(value = "Authorization") Long userId,
