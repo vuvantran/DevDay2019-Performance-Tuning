@@ -8,7 +8,7 @@
             devday2019app
         </Property>
         <Property name="LOG_PATTERN">
-            %d{yyyy-MM-dd} - %d{HH:mm:ss.SSS} - %level{length=1} - %60class | %msg%n
+            %d{yyyy-MM-dd} - %d{HH:mm:ss.SSS} - ${bundle:application:spring.application.name} - %level - %60class | %msg%n
         </Property>
     </Properties>
  
