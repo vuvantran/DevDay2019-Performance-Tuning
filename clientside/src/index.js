@@ -2,8 +2,7 @@ import _ from 'lodash';
 import proto from './HelloService_grpc_web_pb.js';
 function component() {
     const element = document.createElement('div');
-    console.log(proto);
-    var cli = new proto.HelloServiceClient('http://localhost:6565');
+    var cli = new proto.HelloServiceClient('http://localhost:9090');
     var rq = new proto.HelloRequest();
     rq.setFirstname('Caterina');
     rq.setLastname('Frohling');
