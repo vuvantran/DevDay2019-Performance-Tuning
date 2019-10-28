@@ -17,7 +17,7 @@
 
 	<modules>
 		<module>devday-domain</module>
-		<module>devday-repository</module>
+		<module>devday-persistence</module>
 		<module>devday-service</module>
 		<module>devday-rest</module>
 		<module>devday-bootstrap</module>

@@ -1,4 +1,4 @@
-module repository.jmod {
+module persistence.jmod {
 	
 	requires domain.jmod;
 	requires spring.data.commons;
