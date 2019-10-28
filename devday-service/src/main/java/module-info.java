@@ -1,7 +1,7 @@
 module service.jmod {
 	
 	requires domain.jmod;
-	requires repository.jmod;
+	requires persistence.jmod;
 
 	requires org.apache.logging.log4j;
 	requires org.json;
