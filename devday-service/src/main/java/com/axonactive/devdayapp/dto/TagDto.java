@@ -7,6 +7,15 @@ public class TagDto {
 	private Long id;
     private BookDetailDto bookDetail;
     private String name;
+    private long bookDetailId;
+    
+    public TagDto() {}
+
+    public TagDto(Long id, String name, long bookDetailId) {
+        this.id = id;
+        this.name = name;
+        this.bookDetailId = bookDetailId;
+    }
 
     public static TagDto fromEntity(Tag entity) {
         if (entity == null) return null;
@@ -39,6 +48,14 @@ public class TagDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getBookDetailId() {
+        return bookDetailId;
+    }
+
+    public void setBookDetailId(long bookDetailId) {
+        this.bookDetailId = bookDetailId;
     }
 }
 

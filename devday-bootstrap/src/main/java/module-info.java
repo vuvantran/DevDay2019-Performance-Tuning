@@ -17,4 +17,9 @@ module bootstrap.jmod {
 	requires spring.core;
 	requires springfox.assembly;
 	requires static javax.servlet.api;
+	
+	opens com.axonactive.devdayapp to spring.core;
+	opens com.axonactive.devdayapp.config to spring.core, spring.beans, spring.context;
+	
+	exports com.axonactive.devdayapp to spring.beans, spring.context;
 }

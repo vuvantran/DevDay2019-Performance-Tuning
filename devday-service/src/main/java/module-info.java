@@ -14,7 +14,11 @@ module service.jmod {
 	requires spring.security.core;
 	requires jackson.annotations;
 	requires spring.tx;
+	requires java.persistence;
+	requires java.sql;
 	
+	opens com.axonactive.devdayapp.service to spring.core;
+
 	exports com.axonactive.devdayapp.service;
 	exports com.axonactive.devdayapp.dto;
 	exports com.axonactive.devdayapp.logger;

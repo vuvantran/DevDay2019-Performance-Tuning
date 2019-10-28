@@ -6,5 +6,7 @@ module rest.jmod {
 	requires spring.beans;
 	requires spring.security.core;
 	
+	opens com.axonactive.devdayapp.rest to spring.core;
+	
 	exports com.axonactive.devdayapp.rest;
 }

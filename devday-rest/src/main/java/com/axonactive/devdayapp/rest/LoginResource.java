@@ -30,7 +30,7 @@ public class LoginResource {
 
 	@PostMapping("/register")
 	public void registration(@RequestBody LoginUser loginUser) {
-		log.info("POST request to register user. Username: ", loginUser.getUsername());
+		log.info("POST request to register user. Username: {}", loginUser.getUsername());
 		
 		try {
 			loginService.registration(loginUser);
@@ -43,7 +43,8 @@ public class LoginResource {
 
 	@GetMapping("/login")
 	public LoginUser login(@RequestParam String username, @RequestParam String password) {
-		log.info("GET request to login. Username: ", username);
+		log.info("GET request to login. Username: {}", username);
+		
 		try {
 			LoginUser user = loginService.login(username, password);
 			
@@ -63,7 +64,7 @@ public class LoginResource {
 		if (SecurityContextHolder.getContext().getAuthentication() == null || ANONYMOUS_USER.equals(SecurityContextHolder.getContext().getAuthentication().getPrincipal())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User has not been logined yet.");
 		}
-		log.info("GET request to logout. Username: ", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		log.info("GET request to logout. Username: {}", SecurityContextHolder.getContext().getAuthentication().getName());
 		SecurityContextHolder.getContext().setAuthentication(null);
 	}
 }

@@ -1,14 +1,14 @@
 package com.axonactive.devdayapp.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.domain.Comment;
 import com.axonactive.devdayapp.domain.Rating;
 import com.axonactive.devdayapp.domain.Tag;
 import com.axonactive.devdayapp.enums.BookSource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookDetailDto {
 	private Long id;
@@ -19,6 +19,17 @@ public class BookDetailDto {
     private List<RatingDto> ratings;
     private List<TagDto> tags;
     private String coverUrl;
+    private long bookId;
+
+    public BookDetailDto() {}
+    
+    public BookDetailDto(Long id, BookSource source, String description, String coverUrl, long bookId) {
+        this.id = id;
+        this.source = source;
+        this.description = description;
+        this.coverUrl = coverUrl;
+        this.bookId = bookId;
+    }
 
     /**
      * This function just pull out basic information of the entity only
@@ -114,5 +125,13 @@ public class BookDetailDto {
 
     public void setTags(List<TagDto> tags) {
         this.tags = tags;
+    }
+
+    public long getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
     }
 }

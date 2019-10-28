@@ -7,6 +7,17 @@ public class RatingDto {
     private BookDetailDto bookDetail;
     private UserDto user;
     private Integer value;
+    private long bookDetailId;
+
+    public RatingDto() {
+
+    }
+
+    public RatingDto(Long id, Integer value, long bookDetailId) {
+        this.id = id;
+        this.value = value;
+        this.bookDetailId = bookDetailId;
+    }
 
     public static RatingDto fromEntity(Rating entity) {
         if (entity == null) return null;
@@ -47,6 +58,14 @@ public class RatingDto {
 
     public void setValue(Integer value) {
         this.value = value;
+    }
+
+    public long getBookDetailId() {
+        return bookDetailId;
+    }
+
+    public void setBookDetailId(long bookDetailId) {
+        this.bookDetailId = bookDetailId;
     }
 }
 
