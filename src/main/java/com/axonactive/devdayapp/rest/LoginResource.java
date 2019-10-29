@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.axonactive.devdayapp.dto.LoginUser;
 import com.axonactive.devdayapp.service.LoginService;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 public class LoginResource {
