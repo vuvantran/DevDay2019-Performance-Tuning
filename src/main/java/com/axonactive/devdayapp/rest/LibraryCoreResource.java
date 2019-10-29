@@ -88,14 +88,14 @@ public class LibraryCoreResource {
 	}
 	
 	@ApiOperation(value = "V2 of the search API. Caller can choose wich data source to search",
-			consumes = "application/aavn.library.api.v2+json",
-			produces = "application/aavn.library.api.v2+json"
+			consumes = "application/vnd.aavn.library.api.v2+json",
+			produces = "application/vnd.aavn.library.api.v2+json"
 			)
 	@RequestMapping(
 			  method = RequestMethod.POST, 
 			  value = "/books/search", 
-			  produces = "application/aavn.library.api.v2+json",
-			  headers="Content-Type=application/aavn.library.api.v2+json"
+			  produces = "application/vnd.aavn.library.api.v2+json",
+			  headers="Content-Type=application/vnd.aavn.library.api.v2+json"
 			)
 	@ResponseBody
 	public List<BookDto> searchSingleBook(@RequestBody SearchingCriteria criteria) {
