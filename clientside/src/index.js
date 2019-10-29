@@ -19,6 +19,22 @@ function component() {
 
     element.innerHTML = _.join(['Hello', 'webpack'], ' ');
 
+    fetch(
+        "http://localhost:8080/library-core/api/books/search",
+        {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: '{"keyword":"head first design"}'
+        }
+    ).then(rs => rs.json())
+    .then(rs => {
+        console.log(rs);
+    }).catch(error => {
+        console.log(error);
+    });
+
     return element;
 }
 
