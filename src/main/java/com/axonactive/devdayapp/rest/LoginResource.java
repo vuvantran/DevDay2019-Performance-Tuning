@@ -16,7 +16,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.axonactive.devdayapp.dto.LoginUser;
 import com.axonactive.devdayapp.logger.Log;
 import com.axonactive.devdayapp.service.LoginService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/user")
 public class LoginResource {
