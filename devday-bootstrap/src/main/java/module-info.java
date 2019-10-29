@@ -1,8 +1,9 @@
-module bootstrap.jmod {
+open module bootstrap.jmod {
 	
 	requires rest.jmod;
 	
 	requires java.base;
+	requires java.desktop;
 	requires spring.context;
 	requires springfox.swagger2;
 	requires springfox.spring.web;
@@ -10,16 +11,17 @@ module bootstrap.jmod {
 	requires spring.boot;
 	requires spring.beans;
 	requires spring.plugin.core;
-	requires com.google.common;
 	requires spring.security.web;
 	requires spring.security.core;
 	requires spring.security.config;
 	requires spring.core;
+	requires spring.aop;
+	requires spring.expression;
 	requires springfox.assembly;
+	requires com.google.common;
+	requires commons.logging;
 	requires static javax.servlet.api;
 	
-	opens com.axonactive.devdayapp to spring.core;
-	opens com.axonactive.devdayapp.config to spring.core, spring.beans, spring.context;
-	
-	exports com.axonactive.devdayapp to spring.beans, spring.context;
+	exports com.axonactive.devdayapp;
+	exports com.axonactive.devdayapp.config;
 }

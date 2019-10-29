@@ -12,7 +12,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>devday-repository</artifactId>
+			<artifactId>devday-persistence</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

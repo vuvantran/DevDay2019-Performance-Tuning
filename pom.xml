@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.axonactive</groupId>
@@ -21,7 +19,7 @@
 		<module>devday-service</module>
 		<module>devday-rest</module>
 		<module>devday-bootstrap</module>
-	</modules>
+  	</modules>
 
 	<properties>
 		<java.version>11</java.version>
@@ -72,5 +70,443 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-</project>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.moditect</groupId>
+				<artifactId>moditect-maven-plugin</artifactId>
+				<version>1.0.0.Beta2</version>
+				<executions>
+					<execution>
+						<id>add-module-infos</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-module-info</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/../modules-lib</outputDirectory>
+							<overwriteExistingFiles>true</overwriteExistingFiles>
+							<modules>
+								<module>
+									<artifact>
+										<groupId>org.javassist</groupId>
+										<artifactId>javassist</artifactId>
+										<version>3.23.2-GA</version>
+									</artifact>
+									<moduleInfoSource>
+										module javassist {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.modelmapper</groupId>
+										<artifactId>modelmapper</artifactId>
+										<version>2.3.5</version>
+									</artifact>
+									<moduleInfoSource>
+										module modelmapper {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework</groupId>
+										<artifactId>spring-tx</artifactId>
+										<version>${spring-framework.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.tx {
+											requires spring.context;
+											
+											exports org.springframework.transaction.annotation;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework</groupId>
+										<artifactId>spring-aop</artifactId>
+										<version>${spring-framework.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.aop {
+											requires spring.core;										
+										
+											exports org.springframework.aop.framework;
+											exports org.springframework.aop.support;
+											exports org.springframework.aop.framework.autoproxy;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework</groupId>
+										<artifactId>spring-core</artifactId>
+										<version>${spring-framework.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.core {
+											requires commons.logging;
+											requires java.xml;
+											requires java.desktop;
+											requires java.management;
+											
+											opens org.springframework.cglib.core;
+											opens org.springframework.cglib.transform; 
+										
+											exports org.springframework.core;
+											exports org.springframework.core.io;
+											exports org.springframework.core.io.support;
+											exports org.springframework.core.env;
+											exports org.springframework.util;
+											exports org.springframework.core.annotation;
+											exports org.springframework.core.convert.converter;
+											exports org.springframework.core.convert.support;
+											exports org.springframework.core.convert;
+											exports org.springframework.util.unit;
+											exports org.springframework.core.type.filter;
+											exports org.springframework.core.type.classreading;
+											exports org.springframework.util.xml;
+											exports org.springframework.core.type;
+											exports org.springframework.asm;
+											exports org.springframework.cglib.proxy;
+											exports org.springframework.objenesis;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework</groupId>
+										<artifactId>spring-web</artifactId>
+										<version>${spring-framework.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.web {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework</groupId>
+										<artifactId>spring-expression</artifactId>
+										<version>${spring-framework.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.expression {
+											requires spring.core;
+										
+											exports org.springframework.expression;
+											exports org.springframework.expression.spel;
+											exports org.springframework.expression.spel.standard;
+											exports org.springframework.expression.spel.support;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework</groupId>
+										<artifactId>spring-context</artifactId>
+										<version>${spring-framework.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.context {
+											requires spring.core;
+											requires spring.beans;
+											requires spring.aop;
+											requires spring.expression;
+											requires commons.logging;
+											requires java.desktop;
+											
+											exports org.springframework.context;
+											exports org.springframework.context.event;
+											exports org.springframework.format.support;
+											exports org.springframework.format;
+											exports org.springframework.context.annotation;
+											exports org.springframework.context.support;
+											exports org.springframework.stereotype;
+											exports org.springframework.jmx.export.naming;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework</groupId>
+										<artifactId>spring-beans</artifactId>
+										<version>${spring-framework.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.beans {
+											requires spring.core;
+											requires commons.logging;
+											requires java.desktop;
+										
+											exports org.springframework.beans.factory;
+											exports org.springframework.beans;
+											exports org.springframework.beans.propertyeditors;
+											exports org.springframework.beans.factory.support;
+											exports org.springframework.beans.factory.config;
+											exports org.springframework.beans.factory.annotation;
+											exports org.springframework.beans.factory.xml;
+											exports org.springframework.beans.support;
+											exports org.springframework.beans.factory.parsing;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.boot</groupId>
+										<artifactId>spring-boot-autoconfigure</artifactId>
+										<version>2.1.8.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.boot.autoconfigure {
+											requires spring.core;
+											requires spring.context;
+											requires spring.beans;
+											requires spring.boot;
+											requires commons.logging;
+											
+											opens org.springframework.boot.autoconfigure;
+											opens org.springframework.boot.autoconfigure.condition;
+											opens org.springframework.boot.autoconfigure.context;
+											opens org.springframework.boot.autoconfigure.cache;
+											opens org.springframework.boot.autoconfigure.info;
+											
+											exports org.springframework.boot.autoconfigure.logging;
+											exports org.springframework.boot.autoconfigure;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.boot</groupId>
+										<artifactId>spring-boot</artifactId>
+										<version>2.1.8.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.boot {
+											requires spring.core;
+											requires spring.context;
+											requires spring.beans;
+											requires commons.logging;
+											requires java.logging;
+											
+											opens org.springframework.boot to spring.core;
+											opens org.springframework.boot.logging.java;
+											opens org.springframework.boot.diagnostics;
+											opens org.springframework.boot.context.properties;
+											
+											exports org.springframework.boot;
+											exports org.springframework.boot.context;
+											exports org.springframework.boot.context.event;
+											exports org.springframework.boot.context.config;
+											exports org.springframework.boot.context.logging;
+											exports org.springframework.boot.web.context;
+											exports org.springframework.boot.logging;
+											exports org.springframework.boot.builder;
+											exports org.springframework.boot.liquibase;
+											exports org.springframework.boot.cloud;
+											exports org.springframework.boot.env;
+											exports org.springframework.boot.type.classreading;
+											exports org.springframework.boot.context.annotation;
+											exports org.springframework.boot.context.properties.bind;
+										}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.security</groupId>
+										<artifactId>spring-security-core</artifactId>
+										<version>5.1.6.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.security.core {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.security</groupId>
+										<artifactId>spring-security-web</artifactId>
+										<version>5.1.6.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.security.web {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.security</groupId>
+										<artifactId>spring-security-config</artifactId>
+										<version>5.1.6.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.security.config {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.plugin</groupId>
+										<artifactId>spring-plugin-core</artifactId>
+										<version>1.2.0.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.plugin.core {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>io.springfox</groupId>
+										<artifactId>springfox-assembly</artifactId>
+										<version>2.9.2</version>
+									</artifact>
+									<moduleInfoSource>
+										module springfox.assembly {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>io.springfox</groupId>
+										<artifactId>springfox-swagger2</artifactId>
+										<version>2.9.2</version>
+									</artifact>
+									<moduleInfoSource>
+										module springfox.swagger2 {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>io.springfox</groupId>
+										<artifactId>springfox-spring-web</artifactId>
+										<version>2.9.2</version>
+									</artifact>
+									<moduleInfoSource>
+										module springfox.spring.web {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.data</groupId>
+										<artifactId>spring-data-commons</artifactId>
+										<version>2.1.10.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.data.commons {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.springframework.data</groupId>
+										<artifactId>spring-data-jpa</artifactId>
+										<version>2.1.10.RELEASE</version>
+									</artifact>
+									<moduleInfoSource>
+										module spring.data.jpa {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>javax.persistence</groupId>
+										<artifactId>javax.persistence-api</artifactId>
+										<version>2.2</version>
+									</artifact>
+									<moduleInfoSource>
+										module java.persistence {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>com.google.guava</groupId>
+										<artifactId>guava</artifactId>
+										<version>${guava.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module com.google.common {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>com.fasterxml.jackson.core</groupId>
+										<artifactId>jackson-annotations</artifactId>
+										<version>2.9.0</version>
+									</artifact>
+									<moduleInfoSource>
+										module jackson.annotations {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.json</groupId>
+										<artifactId>json</artifactId>
+										<version>${json.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module org.json {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>org.apache.logging.log4j</groupId>
+										<artifactId>log4j-api</artifactId>
+										<version>${log4j2.version}</version>
+									</artifact>
+									<moduleInfoSource>
+										module org.apache.logging.log4j {}
+									</moduleInfoSource>
+								</module>
+								<module>
+									<artifact>
+										<groupId>commons-logging</groupId>
+										<artifactId>commons-logging</artifactId>
+										<version>1.1.1</version>
+									</artifact>
+									<moduleInfoSource>
+										module commons.logging {
+											exports org.apache.commons.logging;
+										}
+									</moduleInfoSource>
+								</module>
+							</modules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.moditect</groupId>
+				<artifactId>moditect-maven-plugin</artifactId>
+				<version>1.0.0.Beta2</version>
+				<executions>
+					<execution>
+						<id>create-runtime-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>create-runtime-image</goal>
+						</goals>
+						<configuration>
+							<modulePath>
+								<path>${project.build.directory}/../modules</path>
+								<path>${project.build.directory}/../modules-lib</path>
+							</modulePath>
+							<modules>
+								<module>domain.jmod</module>
+								<module>persistence.jmod</module>
+								<module>service.jmod</module>
+								<module>rest.jmod</module>
+								<module>bootstrap.jmod</module>
+							</modules>
+							<!-- <excludedResources>
+								<pattern>glob:/com.example/**</pattern>
+							</excludedResources> -->
+							<!-- <baseJdk>version=9,vendor=openjdk,platform=linux-x64</baseJdk> -->
+							<launcher>
+								<name>EntryPoint</name>
+								<module>bootstrap.jmod</module>
+							</launcher>
+							<outputDirectory>
+								${project.build.directory}/jlink-image
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
