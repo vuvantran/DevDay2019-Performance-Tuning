@@ -19,6 +19,7 @@ function component() {
 
     element.innerHTML = _.join(['Hello', 'webpack'], ' ');
 
+    /*
     fetch(
         "http://localhost:8080/library-core/api/books/search",
         {
@@ -34,6 +35,7 @@ function component() {
     }).catch(error => {
         console.log(error);
     });
+    */
 
     return element;
 }
