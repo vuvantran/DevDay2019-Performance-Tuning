@@ -6,7 +6,11 @@ import com.axonactive.devdayapp.domain.BookDetail;
 import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.repo.BookRepository;
+import com.axonactive.devdayapp.util.BookDetailsMapper;
+import com.axonactive.devdayapp.util.BookMapper;
 import com.axonactive.devdayapp.util.BookUtil;
+import com.axonactive.devdayapp.util.CycleAvoidingMappingContext;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -34,12 +38,11 @@ public class DefaultBookService implements BookService {
                 System.currentTimeMillis() - startTime,
                 String.format("bookId=%s", bookId));
 		if(result.isPresent())
-			return BookUtil.toFullBookDto(result.get());
+			return BookMapper.MAPPER.BookToBookDto(result.get(), new CycleAvoidingMappingContext());
 		else
 			return null;
 	}
-
-	@Override
+    @Override
 	public List<BookDto> getAll() {
         long startTime = System.currentTimeMillis();
 		List<BookDto> books = StreamSupport.stream(bookRepo.findAll().spliterator(),false)
@@ -52,18 +55,19 @@ public class DefaultBookService implements BookService {
         return books;
 	}
 
+    
     @Override
     public List<BookDto> findBooksWithNameContain(String keyword) {
         long startTime = System.currentTimeMillis();
         List<BookDto> books = new LinkedList<>();
         for (Book book: bookRepo.findBooksWithNameContain("%".concat(keyword).concat("%"))) {
-            BookDto bookDto = BookDto.fromEntity( book );
+        	BookDto bookDto = BookMapper.MAPPER.BookToBookDto(book, new CycleAvoidingMappingContext());
             List<BookDetailDto> detailDtos = new LinkedList<>();
             bookDto.setDetails(detailDtos);
             books.add(bookDto);
             if (book.getDetails() == null) continue;
             for (BookDetail detail: book.getDetails()) {
-                detailDtos.add( BookDetailDto.fromEntity( detail ) );
+            	 detailDtos.add(BookDetailsMapper.MAPPER.BookDetailToBookDetailDto(detail, new CycleAvoidingMappingContext()));
             }
         }
         log.info(Constants.INFO_LOG_MSG, getClass().getName(),

@@ -2,12 +2,17 @@ package com.axonactive.devdayapp.domain;
 
 import com.axonactive.devdayapp.enums.BookSource;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
 @Table(name="book_details")
+@Getter
+@Setter
 public class BookDetail implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -20,7 +25,7 @@ public class BookDetail implements Serializable {
     @Column
     private BookSource source;
 
-    @Transient
+   // @Transient
     @Column (length = 500)
     private String description;
 
@@ -36,67 +41,5 @@ public class BookDetail implements Serializable {
     @OneToMany(mappedBy="bookDetail")
     private List<Tag> tags;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public BookSource getSource() {
-        return source;
-    }
-
-    public void setSource(BookSource source) {
-        this.source = source;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCoverUrl() {
-        return coverUrl;
-    }
-
-    public void setCoverUrl(String coverUrl) {
-        this.coverUrl = coverUrl;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<Tag> tags) {
-        this.tags = tags;
-    }
 }

@@ -3,8 +3,13 @@ package com.axonactive.devdayapp.domain;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name="book_comments")
+@Getter
+@Setter
 public class Comment implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -24,44 +29,6 @@ public class Comment implements Serializable {
     @JoinColumn (name="parent_id" , nullable=true)
     private Comment parent;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public BookDetail getBookDetail() {
-        return bookDetail;
-    }
-
-    public void setBookDetail(BookDetail bookDetail) {
-        this.bookDetail = bookDetail;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Comment getParent() {
-        return parent;
-    }
-
-    public void setParent(Comment parent) {
-        this.parent = parent;
-    }
 }
 

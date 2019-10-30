@@ -46,4 +46,3 @@ public class DefaultUserService implements UserService {
 		return UserDto.fromEntity(user);
 	}
 }
-

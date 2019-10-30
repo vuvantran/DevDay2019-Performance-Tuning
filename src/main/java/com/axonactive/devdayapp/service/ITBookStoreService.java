@@ -10,6 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
 import com.axonactive.devdayapp.enums.BookSource;
+import com.axonactive.devdayapp.util.BookMapper;
+import com.axonactive.devdayapp.util.CycleAvoidingMappingContext;
 
 public class ITBookStoreService extends ExternalService {
     private static final String BASE_URL = "https://api.itbook.store/1.0/search/";
@@ -39,13 +41,15 @@ public class ITBookStoreService extends ExternalService {
             String preface = book.getString("desc");
             String coverUrl = book.getString("image");
             
-            BookDto bookDto = BookDto.createSingleBook()
+            /*BookDto bookDto = BookDto.createSingleBook()
                 .withName(name)
                 .withAuthor(author)
                 .withDescription(preface)
                 .withCoverUrl(coverUrl)
                 .fromSource(BookSource.IT_BOOK_STORE)
                 .create();
+                */
+            BookDto bookDto = new BookDto(name, author, preface, coverUrl, BookSource.IT_BOOK_STORE);
             output.add(bookDto);
         }
         return output;

@@ -65,14 +65,15 @@ public class OpenLibraryService extends ExternalService {
                 }
             }
 
-            BookDto book = BookDto.createSingleBook()
+            /*BookDto book = BookDto.createSingleBook()
                 .withName(name)
                 .withAuthor(author.toString())
                 .withDescription(preface.toString())
                 .withCoverUrl(coverUrl)
                 .fromSource(BookSource.OPEN_LIBRARY)
                 .create();
-
+			*/
+            BookDto book = new BookDto(name, author.toString(), preface.toString(), coverUrl, BookSource.OPEN_LIBRARY);
             books.add(book);
         }
         return books;
