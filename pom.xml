@@ -101,6 +101,20 @@
     </build>
 	<profiles>
 		<profile>
+			<id>default</id>		
+			<activation>
+		        <activeByDefault>true</activeByDefault>
+		    </activation>
+			<properties>
+				<spring.server.port>8080</spring.server.port>
+				<postgres.ip>localhost</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>postgres</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
 			<id>group1</id>		
 			<properties>
 				<spring.server.port>18080</spring.server.port>
@@ -114,7 +128,12 @@
 		<profile>
 			<id>group2</id>
 			<properties>
-				<spring.profiles.active>group2</spring.profiles.active>
+				<spring.server.port>28080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group2</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group2_devday</postgres.dbname>
 			</properties>
 		</profile>
 		<profile>
