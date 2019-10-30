@@ -101,6 +101,13 @@
     </build>
 	<profiles>
 		<profile>
+			<id>initData</id>
+			<properties>
+				<initData>true</initData>
+				<initDBMode>always</initDBMode>
+			</properties>
+		</profile>
+		<profile>
 			<id>default</id>		
 			<activation>
 		        <activeByDefault>true</activeByDefault>
@@ -137,10 +144,47 @@
 			</properties>
 		</profile>
 		<profile>
-			<id>initData</id>
+			<id>group3</id>
 			<properties>
-				<initData>true</initData>
-				<initDBMode>always</initDBMode>
+				<spring.server.port>18080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group3</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group3_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group4</id>
+			<properties>
+				<spring.server.port>28080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group4</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group4_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group5</id>
+			<properties>
+				<spring.server.port>18080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group5</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group5_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group6</id>
+			<properties>
+				<spring.server.port>28080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group6</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group6_devday</postgres.dbname>
 			</properties>
 		</profile>
 	</profiles>
