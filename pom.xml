@@ -18,6 +18,8 @@
     	<springfox.swagger.version>2.9.2</springfox.swagger.version>
     	<swagger-annotations.version>1.5.21</swagger-annotations.version>
   		<swagger-models.version>1.5.21</swagger-models.version>
+		<initData>false</initData>
+		<initDBMode>never</initDBMode>
     </properties>
 
     <dependencies>
@@ -86,13 +88,110 @@
     </dependencies>
 
     <build>
+		<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     	<plugins>
         	<plugin>
 	            <groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+				
+        </configuration>
             </plugin>
         </plugins>
     </build>
-
+	<profiles>
+		<profile>
+			<id>initData</id>
+			<properties>
+				<initData>true</initData>
+				<initDBMode>always</initDBMode>
+			</properties>
+		</profile>
+		<profile>
+			<id>default</id>		
+			<activation>
+		        <activeByDefault>true</activeByDefault>
+		    </activation>
+			<properties>
+				<spring.server.port>8080</spring.server.port>
+				<postgres.ip>localhost</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>postgres</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group1</id>		
+			<properties>
+				<spring.server.port>18080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group1</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group1_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group2</id>
+			<properties>
+				<spring.server.port>28080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group2</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group2_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group3</id>
+			<properties>
+				<spring.server.port>18080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group3</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group3_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group4</id>
+			<properties>
+				<spring.server.port>28080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group4</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group4_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group5</id>
+			<properties>
+				<spring.server.port>18080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group5</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group5_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group6</id>
+			<properties>
+				<spring.server.port>28080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group6</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group6_devday</postgres.dbname>
+			</properties>
+		</profile>
+	</profiles>
 </project>
 

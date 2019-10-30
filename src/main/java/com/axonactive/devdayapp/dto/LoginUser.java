@@ -2,35 +2,35 @@ package com.axonactive.devdayapp.dto;
 
 public class LoginUser {
 
+	private Long userId;
 	private String username;
-	private String password;
     private String fullName;
     private String email;
 
-    public static UserDto toUserDTO(LoginUser loginUser) {
-        if (loginUser == null) return null;
-        UserDto userDto = new UserDto();
-        userDto.setUsername(loginUser.getUsername());
-        userDto.setPassword(loginUser.getPassword());
-        userDto.setFullName(loginUser.getFullName());
-        userDto.setEmail(loginUser.getEmail());
-        return userDto;
+    public static LoginUser toLoginUser(UserDto userDto) {
+        if (userDto == null) return null;
+        LoginUser loginUser = new LoginUser();
+		loginUser.setUserId(userDto.getId());
+		loginUser.setUsername(userDto.getUsername());
+		loginUser.setFullName(userDto.getFullName());
+		loginUser.setEmail(userDto.getEmail());
+        return loginUser;
     }
+    
+    public Long getUserId() {
+		return userId;
+	}
 
-    public String getUsername() {
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getUsername() {
 		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getFullName() {

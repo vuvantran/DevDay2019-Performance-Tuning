@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.axonactive.devdayapp.Constants;
 import com.axonactive.devdayapp.dto.LoginUser;
+import com.axonactive.devdayapp.dto.RegisterUser;
+import com.axonactive.devdayapp.dto.UserDto;
 import com.axonactive.devdayapp.exception.InvalidUsernamePasswordException;
 import com.axonactive.devdayapp.exception.UserAlreadyExistedException;
 import com.axonactive.devdayapp.exception.UserNotFoundException;
@@ -29,28 +31,27 @@ public class DefaultLoginService implements LoginService {
 	private AuthenticationManager authenticationManager;
 
 	@Override
-	public void registration(LoginUser loginUser) {
-		
-		long startTime = System.currentTimeMillis();
-		
-		if (userService.findByUsername(loginUser.getUsername()) != null) {
-			log.error(Constants.ERROR_LOG_MSG, getClass().getName(), 
-					"register",
-					String.format("User already existed: userName=%s, password=%s", loginUser.getUsername(), loginUser.getPassword()));
+	public void register(RegisterUser registerUser) {
+        long startTime = System.currentTimeMillis();
+		if (userService.findByUsername(registerUser.getUsername()) != null)
+		{
+            log.error(Constants.ERROR_LOG_MSG, getClass().getName(),
+                "register", 
+                String.format("User already existed: userName=%s, password=%s", registerUser.getUsername(), registerUser.getPassword()));
 			throw new UserAlreadyExistedException("Error when creating new user. User already existed.");
 		}
 		
-		Boolean save = userService.save(LoginUser.toUserDTO(loginUser));
-		if (!save) {
-			log.error(Constants.ERROR_LOG_MSG, getClass().getName(), 
-					"register",
-					String.format("Cannot save user to database: userName=%s, password=%s", loginUser.getUsername(), loginUser.getPassword()));
+		Boolean save = userService.save(RegisterUser.toUserDTO(registerUser));
+		if (!save)	{
+            log.error(Constants.ERROR_LOG_MSG, getClass().getName(),
+                "register", 
+                String.format("Cannot save user to database: userName=%s, password=%s", registerUser.getUsername(), registerUser.getPassword()));
 			throw new InternalError("Error when creating new user. Cannot save user to database.");
 		}
-		log.info(Constants.INFO_LOG_MSG, getClass().getName(), 
-				"register", 
-				System.currentTimeMillis() - startTime,
-				String.format("userName=%s, password=%s", loginUser.getUsername(), loginUser.getPassword()));
+        log.info(Constants.INFO_LOG_MSG, getClass().getName(),
+                "registration", 
+                System.currentTimeMillis() - startTime,
+                String.format("userName=%s, password=%s", registerUser.getUsername(), registerUser.getPassword()));
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class DefaultLoginService implements LoginService {
 		}
 		
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-				userDetails, password, userDetails.getAuthorities());
+				username, password, userDetails.getAuthorities());
 
 		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
@@ -80,9 +81,8 @@ public class DefaultLoginService implements LoginService {
 					System.currentTimeMillis() - startTime,
 					String.format("userName=%s, password=%s", username, password));
 			
-			LoginUser loginUser = new LoginUser();
-			loginUser.setUsername(username);
-			loginUser.setPassword(password);
+			UserDto userDto = userService.findByUsername(username);
+			LoginUser loginUser = LoginUser.toLoginUser(userDto);
 			return loginUser;
 		}
 		

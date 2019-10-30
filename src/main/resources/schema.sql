@@ -1,13 +1,22 @@
 SET client_encoding = 'UTF8';
 
--- drop table "book_ratings";
--- drop table "book_tags";
--- drop table "book_comments";
--- drop table "book_details";
--- drop table "user_books";
--- drop table "books";
--- drop table "devices";
--- drop table "users";
+drop table if exists "book_ratings";
+drop table if exists "book_tags";
+drop table if exists "book_comments";
+drop table if exists "book_details";
+drop table if exists "user_books";
+drop table if exists "books";
+drop table if exists "devices";
+drop table if exists "users";
+
+drop sequence if exists book_comments_id_seq;
+drop sequence if exists book_details_id_seq;
+drop sequence if exists book_ratings_id_seq;
+drop sequence if exists book_tags_id_seq;
+drop sequence if exists books_id_seq;
+drop sequence if exists devices_id_seq;
+drop sequence if exists users_id_seq;
+
 
 CREATE TABLE public.book_comments (
     id bigint NOT NULL,
@@ -134,8 +143,6 @@ CREATE SEQUENCE public.devices_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE public.devices_id_seq OWNER TO postgres;
 
 
 ALTER SEQUENCE public.devices_id_seq OWNED BY public.devices.id;
