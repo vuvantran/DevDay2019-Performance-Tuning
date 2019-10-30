@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.axonactive.devdayapp.dto.LoginUser;
+import com.axonactive.devdayapp.dto.RegisterUser;
 import com.axonactive.devdayapp.service.LoginService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -26,12 +27,12 @@ public class LoginResource {
 	@Autowired
 	private LoginService loginService;
 
-	@PostMapping("/registration")
-	public void registration(@RequestBody LoginUser loginUser) {
-		log.info("POST request to register user. Username: {}", loginUser.getUsername());
+	@PostMapping("/register")
+	public void registration(@RequestBody RegisterUser registerUser) {
+		log.info("POST request to register user. Username: {}", registerUser.getUsername());
 		
 		try {
-			loginService.registration(loginUser);
+			loginService.register(registerUser);
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot register user. Exception: " + e.getMessage());
 		}
