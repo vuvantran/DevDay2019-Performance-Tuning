@@ -2,19 +2,21 @@
 DevDay2019 for Performance Tuning
 
 # Kick up and run
-1. Run with default setting (local DB, default ports)
+
+## 1. Run with default setting (local DB, default ports)
     
     mvn clean spring-boot:run
-2. Run with team profile
+## 2. Run with team profile
     
     mvn clean spring-boot:run -PgroupX
-X: is your group number
+    
+__X: is your group number__
 
-3. Create DB schema
-TBD
-4. Init data 
-TBD
+## 3. Init data 
 
+    mvn clean spring-boot:run -PgroupX,initData
+    
+__X: is your group number__
 # Book external source
 - https://api.itbook.store
 - https://openlibrary.org/dev/docs/api/search
