@@ -19,7 +19,7 @@
     	<swagger-annotations.version>1.5.21</swagger-annotations.version>
   		<swagger-models.version>1.5.21</swagger-models.version>
 		<initData>false</initData>
-		<createDB>none</createDB>
+		<initDBMode>never</initDBMode>
     </properties>
 
     <dependencies>
@@ -139,8 +139,8 @@
 		<profile>
 			<id>initData</id>
 			<properties>
-				<initData>always</initData>
-				<createDB>create</createDB>
+				<initData>true</initData>
+				<initDBMode>always</initDBMode>
 			</properties>
 		</profile>
 	</profiles>

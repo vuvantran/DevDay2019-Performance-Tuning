@@ -16,7 +16,7 @@ SET client_encoding = 'UTF8';
 -- delete from books;
 -- delete from users;
 --
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+-- CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 --
 -- TOC entry 2846 (class 0 OID 47622)
