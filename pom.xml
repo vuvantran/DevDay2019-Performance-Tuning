@@ -18,6 +18,8 @@
     	<springfox.swagger.version>2.9.2</springfox.swagger.version>
     	<swagger-annotations.version>1.5.21</swagger-annotations.version>
   		<swagger-models.version>1.5.21</swagger-models.version>
+		<initData>false</initData>
+		<createDB>none</createDB>
     </properties>
 
     <dependencies>
@@ -81,13 +83,47 @@
     </dependencies>
 
     <build>
+		<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     	<plugins>
         	<plugin>
 	            <groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+				
+        </configuration>
             </plugin>
         </plugins>
     </build>
-
+	<profiles>
+		<profile>
+			<id>group1</id>		
+			<properties>
+				<spring.server.port>18080</spring.server.port>
+				<postgres.ip>192.168.70.59</postgres.ip>
+				<postgres.port>5432</postgres.port>
+				<postgres.username>group1</postgres.username>
+				<postgres.password>postgres</postgres.password>
+				<postgres.dbname>group1_devday</postgres.dbname>
+			</properties>
+		</profile>
+		<profile>
+			<id>group2</id>
+			<properties>
+				<spring.profiles.active>group2</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>initData</id>
+			<properties>
+				<initData>always</initData>
+				<createDB>create</createDB>
+			</properties>
+		</profile>
+	</profiles>
 </project>
 
