@@ -21,7 +21,7 @@ DevDay2019 for Performance Tuning
 
 Or
 
-    java -jar devday2019project-0.0.1-SNAPSHOT.jar --spring.config.location=profiles/groupX_application.properties --spring.datasource.initialize=true --spring.datasource.initialization-mode=always >trace.txt
+    java -jar devday2019project-0.0.1-SNAPSHOT.jar --spring.config.location=profiles/groupX_application.properties --spring.datasource.initialize=true --spring.datasource.initialization-mode=always 
     
 ## 5. DevOps
 
