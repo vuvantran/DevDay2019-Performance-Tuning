@@ -11,11 +11,19 @@ DevDay2019 for Performance Tuning
     mvn spring-boot:run -Dspring.config.location="your_application.properties"
     
 
-## 3. Init data 
+## 3. Init data on local
 
     mvn clean spring-boot:run -PinitData
     
-## 4. DevOps
+## 4. Init data on server
+
+    mvn spring-boot:run -Dspring.config.location="profiles/groupX_application.properties" -Dspring-boot.run.arguments="--spring.datasource.initialize=true,--spring.datasource.initialization-mode=always"
+
+Or
+
+    java -jar devday2019project-0.0.1-SNAPSHOT.jar --spring.config.location=profiles/groupX_application.properties --spring.datasource.initialize=true --spring.datasource.initialization-mode=always >trace.txt
+    
+## 5. DevOps
 
 Build .jar
 
