@@ -6,17 +6,30 @@ DevDay2019 for Performance Tuning
 ## 1. Run with default setting (local DB, default ports)
     
     mvn clean spring-boot:run
-## 2. Run with team profile
+## 2. Run with external properties file
     
-    mvn clean spring-boot:run -PgroupX
+    mvn spring-boot:run -Dspring.config.location="your_application.properties"
     
-__X: is your group number__
 
 ## 3. Init data 
 
-    mvn clean spring-boot:run -PgroupX,initData
+    mvn clean spring-boot:run -PinitData
+    
+## 4. DevOps
+
+Build .jar
+
+    mvn clean install
+    
+Copy .jar file to server
+    
+Run on server with specific profile
+
+    java -jar devday2019project-0.0.1-SNAPSHOT.jar --spring.config.location=groupX_application.properties
     
 __X: is your group number__
+
+__DevOps: Please ask your supporter for team's properties files__
 # Book external source
 - https://api.itbook.store
 - https://openlibrary.org/dev/docs/api/search
