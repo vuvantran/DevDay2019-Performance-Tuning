@@ -8,7 +8,7 @@
             devday2019app
         </Property>
         <Property name="LOG_PATTERN">
-            %d{yyyy-MM-dd} - %d{HH:mm:ss.SSS} - ${bundle:application:spring.application.name} - %level - %60class | %msg%n
+            %d{yyyy-MM-dd} - %d{HH:mm:ss.SSS} - ${hostName}/${bundle:application:server.port} - ${bundle:application:spring.application.name} - ${bundle:application:server.port} - %level - %120c | %msg%n
         </Property>
     </Properties>
  
@@ -37,13 +37,9 @@
     </Appenders>
  
     <Loggers>
-        <Logger name="com.axonactive.devdayapp" additivity="false">
+        <Root level="all">
             <AppenderRef ref="errorLog" />
             <AppenderRef ref="exceptDebugLog"  />
-            <AppenderRef ref="Console"  />
-        </Logger>
-        
-        <Root level="all">
             <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
