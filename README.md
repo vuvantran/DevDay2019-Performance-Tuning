@@ -37,6 +37,10 @@ Run on server with specific profile
     
 __X: is your group number__
 
+## 6. Swagger
+
+http://host:port/swagger-ui.html#/
+
 __DevOps: Please ask your supporter for team's properties files__
 # Book external source
 - https://api.itbook.store
