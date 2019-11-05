@@ -37,10 +37,17 @@
     </Appenders>
  
     <Loggers>
+        <Logger name="org.springframework" level="INFO">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        
+        <Logger name="com.axonactive" level="ERROR">
+            <AppenderRef ref="Console"/>
+        </Logger>
+    
         <Root level="all">
             <AppenderRef ref="errorLog" />
             <AppenderRef ref="exceptDebugLog"  />
-            <AppenderRef ref="Console"/>
         </Root>
     </Loggers>
 </Configuration>
