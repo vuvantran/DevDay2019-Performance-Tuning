@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
 
-public abstract class ExternalService implements Callable<List<BookDto>> {
+public abstract class ExternalService {
     private static final Logger log = LogManager.getLogger(ExternalService.class);
 
     private String keyword;
@@ -41,15 +41,5 @@ public abstract class ExternalService implements Callable<List<BookDto>> {
     abstract protected List<BookDto> extractBooks(String response);
 
     abstract protected String getServiceName();
-
-    @Override
-    public List<BookDto> call() {
-        long startPot = System.currentTimeMillis();
-        List<BookDto> output = search(keyword);
-        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
-        System.out.println(">>> source: "+getServiceName()+" take: "+(System.currentTimeMillis() - startPot)+"ms");
-        System.out.println("-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+-");
-        return output;
-    }
 }
 

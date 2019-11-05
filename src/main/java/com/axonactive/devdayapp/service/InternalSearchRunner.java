@@ -5,7 +5,7 @@ import java.util.concurrent.Callable;
 
 import com.axonactive.devdayapp.dto.BookDto;
 
-public class InternalSearchRunner implements Callable<List<BookDto>> {
+public class InternalSearchRunner{
 
     private BookService bookService;
     private String keyword;
@@ -15,7 +15,6 @@ public class InternalSearchRunner implements Callable<List<BookDto>> {
         keyword = kw;
     }
 
-    @Override
     public List<BookDto> call() {
         long startPot = System.currentTimeMillis();
         List<BookDto> output = bookService.findBooksWithNameContain(keyword);
