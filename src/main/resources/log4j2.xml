@@ -8,12 +8,17 @@
             devday2019app
         </Property>
         <Property name="LOG_PATTERN">
-            %d{yyyy-MM-dd} - %d{HH:mm:ss.SSS} - ${hostName}/${bundle:application:server.port} - ${bundle:application:spring.application.name} - ${bundle:application:server.port} - %level - %120c | %msg%n
+            %d{yyyy-MM-dd} - %d{HH:mm:ss.SSS} - ${hostName}/${bundle:application:server.port} - ${bundle:application:spring.application.name} - ${bundle:application:server.port} - %level - %120c - %-20X{username} | %msg%n
         </Property>
     </Properties>
  
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        
+        <Console name="errConsole" target="SYSTEM_OUT" follow="true">
+            <ThresholdFilter level="ERROR"/>
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
          
@@ -40,14 +45,11 @@
         <Logger name="org.springframework" level="INFO">
             <AppenderRef ref="Console"/>
         </Logger>
-        
-        <Logger name="com.axonactive" level="ERROR">
-            <AppenderRef ref="Console"/>
-        </Logger>
     
         <Root level="all">
             <AppenderRef ref="errorLog" />
             <AppenderRef ref="exceptDebugLog"  />
+            <AppenderRef ref="errConsole"/>
         </Root>
     </Loggers>
 </Configuration>
