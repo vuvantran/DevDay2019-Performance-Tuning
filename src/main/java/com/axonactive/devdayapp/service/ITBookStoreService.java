@@ -5,31 +5,17 @@ import java.util.LinkedList;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import org.springframework.web.client.RestTemplate;
 
 import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.BookDetailDto;
 import com.axonactive.devdayapp.enums.BookSource;
 
 public class ITBookStoreService extends ExternalService {
-
     private static final String BASE_URL = "https://api.itbook.store/1.0/search/";
     private static final String GET_BOOK_URL = "https://api.itbook.store/1.0/books/";
 
-    public ITBookStoreService() {
-        super("");
-    }
-
-    public ITBookStoreService(String kw) {
-        super(kw);
-    }
-
-    @Override
-    public ExternalService createSearchInstance(String kw) {
-        return new ITBookStoreService(kw);
-    }
+    
 
     @Override
     protected String buildQueryUrl(String keyword) {

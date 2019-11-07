@@ -1,32 +1,20 @@
 package com.axonactive.devdayapp.service;
 
-import java.util.List;
+import com.axonactive.devdayapp.dto.BookDto;
+import com.axonactive.devdayapp.enums.BookSource;
 import java.util.LinkedList;
-
-import org.json.JSONObject;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
-
-import com.axonactive.devdayapp.dto.BookDto;
-import com.axonactive.devdayapp.dto.BookDetailDto;
-import com.axonactive.devdayapp.enums.BookSource;
+import org.json.JSONObject;
 
 public class BookMoochService extends ExternalService {
-
     private static final String BASE_URL = "http://api.bookmooch.com/api/search?db=bm&o=json&txt=";
 
-    public BookMoochService() {
-        super("");
-    }
-
-    private BookMoochService(String kw) {
-        super(kw);
-    }
-
-    @Override
-    public ExternalService createSearchInstance(String kw) {
-        return new BookMoochService(kw);
-    }
+	/*
+	 * @Override public ExternalService createSearchInstance(String kw) { return new
+	 * BookMoochService(kw); }
+	 */
 
     @Override
     protected String buildQueryUrl(String keyword) {

@@ -109,4 +109,3 @@ public class DefaultSearchingService implements SearchingService {
         return new ArrayList<>();
     }
 }
-

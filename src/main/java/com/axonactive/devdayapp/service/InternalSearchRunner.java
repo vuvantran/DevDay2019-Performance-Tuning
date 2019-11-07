@@ -5,7 +5,7 @@ import java.util.concurrent.Callable;
 
 import com.axonactive.devdayapp.dto.BookDto;
 
-public class InternalSearchRunner{
+public class InternalSearchRunner implements Callable<List<BookDto>> {
 
     private BookService bookService;
     private String keyword;

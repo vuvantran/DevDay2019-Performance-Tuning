@@ -1,3 +1,11 @@
-logs/
+**/logs
 target/
+<<<<<<< HEAD
 clientside/node_modules
+=======
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+>>>>>>> remotes/origin/master

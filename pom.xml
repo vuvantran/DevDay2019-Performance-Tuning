@@ -18,6 +18,8 @@
     	<springfox.swagger.version>2.9.2</springfox.swagger.version>
     	<swagger-annotations.version>1.5.21</swagger-annotations.version>
   		<swagger-models.version>1.5.21</swagger-models.version>
+		<initData>false</initData>
+		<initDBMode>never</initDBMode>
     </properties>
 
     <dependencies>
@@ -78,61 +80,37 @@
             <artifactId>json</artifactId>
             <version>20190722</version>
         </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-netty-shaded</artifactId>
-            <version>1.24.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-protobuf</artifactId>
-            <version>1.24.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.grpc</groupId>
-            <artifactId>grpc-stub</artifactId>
-            <version>1.24.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.lognet</groupId>
-            <artifactId>grpc-spring-boot-starter</artifactId>
-            <version>3.4.3</version>
-        </dependency>
+ 
     </dependencies>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>kr.motd.maven</groupId>
-                <artifactId>os-maven-plugin</artifactId>
-                <version>1.6.2</version>
-            </extension>
-        </extensions>
+
+		<resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     	<plugins>
         	<plugin>
 	            <groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+				
+				</configuration>
             </plugin>
-            <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
-                <version>0.6.1</version>
-                <configuration>
-                    <protocArtifact>com.google.protobuf:protoc:3.10.0:exe:${os.detected.classifier}</protocArtifact>
-                    <pluginId>grpc-java</pluginId>
-                    <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.24.0:exe:${os.detected.classifier}</pluginArtifact>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>
-                            <goal>compile-custom</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
     </build>
-
+	<profiles>
+		<profile>
+			<id>initData</id>
+			<properties>
+				<initData>true</initData>
+				<initDBMode>always</initDBMode>
+			</properties>
+		</profile>
+		
+	</profiles>
 </project>
 
