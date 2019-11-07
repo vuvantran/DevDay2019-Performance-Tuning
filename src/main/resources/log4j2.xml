@@ -16,6 +16,11 @@
         <Console name="Console" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
+        
+        <Console name="errConsole" target="SYSTEM_OUT" follow="true">
+            <ThresholdFilter level="ERROR"/>
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
          
         <RollingFile name="errorLog" fileName="${LOG_DIR}/${LOG_FILENAME}-errors.log"
             filePattern="${LOG_DIR}/${LOG_FILENAME}-errors-%d{yyyy-MM-dd}.log">
@@ -40,14 +45,11 @@
         <Logger name="org.springframework" level="INFO">
             <AppenderRef ref="Console"/>
         </Logger>
-        
-        <Logger name="com.axonactive" level="ERROR">
-            <AppenderRef ref="Console"/>
-        </Logger>
     
         <Root level="all">
             <AppenderRef ref="errorLog" />
             <AppenderRef ref="exceptDebugLog"  />
+            <AppenderRef ref="errConsole"/>
         </Root>
     </Loggers>
 </Configuration>
