@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:              # tells what pods the deployment will apply to, refer to line number 11 for pod template
+      app: devday-backend
+  template:                   # actually, this is the pod template, describes a pod that is launched
+    metadata:
+      labels:
+        app: devday-backend # this should match with the matchLabels value above, otherwise, this kind of pod will not be controlled by the above deployment
+    spec:
+      containers:
+      - name: backend-container
+        image: containerregistryvu.azurecr.io/devday-backend:latest
+        # Add opening port
+        ports:                                      #+
+        - containerPort: 8080                       #+
+          name: http                                #+
+        env:
+        - name: DATASOURCE_URL
+          value: "jdbc:postgresql://mhdanhdb.postgres.database.azure.com:5432/devday"
+        - name: DATASOURCE_USERNAME
+          value: "devdayadmin@mydevdaydb"
+        - name: DATASOURCE_PASSWORD
+          value: "Devd@y-2@19"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  type: LoadBalancer
+#  loadBalancerIP: 52.163.191.19 # comment this like for auto generate ip
+#  type: NodePort
+  selector:
+    app: devday-backend
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
