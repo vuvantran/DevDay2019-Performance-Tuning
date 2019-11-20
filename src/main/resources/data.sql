@@ -9,14 +9,14 @@
 
 SET client_encoding = 'UTF8';
 
-
--- delete from book_tags;
--- delete from book_comments;
--- delete from book_details;
--- delete from books;
--- delete from users;
+delete from book_ratings;
+delete from book_tags;
+delete from book_comments;
+delete from book_details;
+delete from books;
+delete from users;
 --
--- CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
 
 --
 -- TOC entry 2846 (class 0 OID 47622)
